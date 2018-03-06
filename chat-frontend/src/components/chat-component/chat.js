@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 import "./styles.css";
 import send from "../../images/send.png";
+import io from "socket.io-client";
+
+var connectionOptions = {
+
+    "force new connection": true,
+    "reconnectionAttempts": "infinity",
+    "timeout": 10000,
+    "transports": ["websocket"]
+};
+const socket = io('http://localhost:3002', connectionOptions);
 
 export default class Chat extends Component {
 
@@ -35,10 +45,20 @@ export default class Chat extends Component {
                         />
                     </div>
                     <div className="send-button-container">
-                        <img src={send} alt="send" className="send-button" />
+                        <img src={send} alt="send" onClick={this.sendMessage.bind(this)} className="send-button" />
                     </div>
                 </div>
             </div>
         );
+    }
+
+    sendMessage() {
+
+        socket.emit('chat message', { msg: this.state.message });
+        socket.on('catch it', function (data) {
+
+            console.log(data.message);
+        })
+
     }
 }

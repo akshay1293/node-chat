@@ -2,7 +2,7 @@
 
     display: flex;
     flex-direction: column;
-    height:fill
+    height:stretch
     
 }
 
@@ -33,7 +33,7 @@
 
     flex:0.5;
     display: flex;
-    padding : 5px 2px;
+    padding : 8px 2px;
 }
 
 .form-control{
@@ -46,8 +46,8 @@
 
 .send-button{
 
-    height:60px;
-    width:60px;
+    height:55px;
+    width:55px;
     align-self: flex-end;
     cursor: pointer;
 

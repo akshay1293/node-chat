@@ -2,7 +2,7 @@
 
     display:flex;
     flex-direction: row;
-    height:fill;
+    height:stretch;
 }
 
 .chat-container{
@@ -14,4 +14,53 @@
 .profiles-container{
 
     flex:2;
+    display:flex;
+    flex-direction: column;
+    padding:10px 10px;
+}
+
+.search-box-container{
+
+    flex :0.5;
+    display:flex;
+    flex-direction: row;
+    border:1px solid darkgrey;
+    border-radius:10px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    
+}
+
+.profile-list{
+
+    flex:9.5;
+}
+
+.search-icon-container{
+
+    padding:4px 0px;
+    flex:1.1;
+    border:none;
+}
+
+.search-icon{
+
+    height:17px;
+    width:17px;
+    
+}
+
+.search-txt-box{
+
+    background: #FFF;
+    border:none;
+    height:30px;
+    flex:8.9;
+    color:#555;
+    padding :6px 12px;
+    font-size: 12px;
+    border-radius:10px;
+}
+
+textarea:focus, input:focus{
+    outline: none;
 }
