@@ -1,0 +1,17 @@
+.home-container{
+
+    display:flex;
+    flex-direction: row;
+    height:fill;
+}
+
+.chat-container{
+
+    flex:8;
+    border-left:0.5px solid darkgrey;
+}
+
+.profiles-container{
+
+    flex:2;
+}

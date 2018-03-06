@@ -1,0 +1,54 @@
+.chat-box{
+
+    display: flex;
+    flex-direction: column;
+    height:fill
+    
+}
+
+.display-chat{
+
+  flex: 9.9;
+  background: #FAEFF7;  
+}
+.message-area{
+
+    flex:0.1;
+    display: flex;
+    flex-direction:row;
+    border-top:0.5px solid darkgrey;
+    
+    
+}
+
+.message-box-container{
+
+    flex:9.5;
+    padding : 10px 10px;
+    display: flex;
+
+}
+
+.send-button-container{
+
+    flex:0.5;
+    display: flex;
+    padding : 5px 2px;
+}
+
+.form-control{
+
+    height:50px;
+    align-self: flex-end;
+    background: #F7F2F6;
+    font-size: 16px;
+}
+
+.send-button{
+
+    height:60px;
+    width:60px;
+    align-self: flex-end;
+    cursor: pointer;
+
+}
