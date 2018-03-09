@@ -46,7 +46,7 @@ function login(req, res, next) {
         .then(function (user) {
 
             if (user) {
-                var token = jwt.sign({ user }, config.secret, { expiresIn: 86400 });
+                var token = jwt.sign({ user: { id: user.id, handle: user.handle, email: user.email } }, config.secret, { expiresIn: 86400 });
                 res.status(200).json({ token: token, id: user.id, handle: user.handle, email: user.email });
             } else {
 
