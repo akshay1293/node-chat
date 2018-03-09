@@ -1,0 +1,33 @@
+.login-container{
+
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    height:fill;
+    
+    
+}
+
+.login-area{
+
+    border:1px solid #FBDDF3;
+    border-radius:7px;
+    padding:20px 40px;
+    min-width:350px;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    background: #00bbac;
+}
+
+
+.login-area *{
+
+    margin-top: 10px;
+}
+
+.form-control{
+
+    height:40px;
+}

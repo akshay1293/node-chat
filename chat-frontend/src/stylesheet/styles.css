@@ -1,0 +1,167 @@
+*{
+
+    /* border:1px solid black; */
+}
+
+.main-container{
+
+    height:fill;
+    display:flex;
+    flex-direction: row;
+}
+
+.left-panel{
+
+    flex:2;
+}
+
+.chat-container{
+
+    display: flex;
+    flex:8;
+    flex-direction: column;
+    border-left:1px solid lightgray
+}
+
+.header-container{
+
+    flex:1;
+}
+
+.menu-container{
+    display:none;
+    position: absolute;
+    background:rgba(255,255,255,0.7);
+    height:200px;
+    width:150px;
+    right:24px;
+    top:66px;
+    border-radius:9px 0px 9px 9px;
+    border:1px solid darkgray;
+
+}
+
+.top{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding:0 20px;
+    padding-top: 20px;
+    background: #00bbac;
+    color:darkslategray;
+    box-shadow: gray 1px 2px 3px;
+}
+
+.top-right{
+
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 16px;
+}
+
+.top-right a{
+
+    text-decoration: none;
+    color:darkslategray;
+}
+
+.top-left{
+
+    margin:none;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.left{
+
+    display:flex;
+    flex-direction: column;
+    padding:10px;
+}
+
+.chat-display-container{
+    flex:8;
+}
+
+.send-message-container{
+
+    flex:1;
+}
+
+.send-button{
+
+    height:45px;
+    width:45px;
+    align-self: flex-end;
+    cursor: pointer;
+
+}
+
+.sign-out{
+
+    cursor: pointer;
+}
+
+.message-area{
+
+    flex:0.1;
+    display: flex;
+    flex-direction:row;
+}
+
+.message-box-container{
+
+    flex:9.5;
+    padding : 10px 10px;
+    display: flex;
+
+}
+
+.send-button-container{
+
+    flex:0.5;
+    display: flex;
+    padding : 8px 2px;
+}
+
+.search-box-container{
+
+    flex :0.5;
+    display:flex;
+    flex-direction: row;
+    border:1px solid darkgrey;
+    border-radius:10px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    
+}
+
+.search-icon-container{
+
+    padding:4px 0px;
+    flex:1.1;
+    border:none;
+}
+
+.search-icon{
+
+    height:17px;
+    width:17px;
+    
+}
+
+.search-txt-box{
+
+    background: #FFF;
+    border:none;
+    height:30px;
+    flex:8.9;
+    color:#555;
+    padding :6px 12px;
+    font-size: 14px;
+    border-radius:10px;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
