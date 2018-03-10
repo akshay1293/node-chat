@@ -11,7 +11,7 @@ var connectionOptions = {
     "timeout": 10000,
     "transports": ["websocket"]
 };
-const socket = io('http://localhost:3002', connectionOptions);
+const socket = io('http://localhost:3003', connectionOptions);
 
 socket.emit('join', { id: 0 });
 
@@ -38,7 +38,8 @@ export default class SendMessage extends Component {
             <div className="message-area">
 
                 <div className="message-box-container">
-                    <input type="text" className="form-control" name="message" id="chat-message"
+                    <span style={{ alignSelf: "center" }}><i className="far fa-envelope" style={{ fontSize: 18, color: "#FFF", marginLeft: "8px" }}></i></span>
+                    <input type="text" className="input-box message" name="message" id="chat-message"
                         placeholder="Type a message"
                         onChange={() => {
 
@@ -50,7 +51,7 @@ export default class SendMessage extends Component {
                     />
                 </div>
                 <div className="send-button-container">
-                    <img src={send} alt="send" onClick={this.send.bind(this)} className="send-button" />
+                    <span style={{ alignSelf: "center" }}><i className="fas fa-paper-plane send" style={{ fontSize: 26, color: "#FFF", marginLeft: "8px", cursor: "pointer" }}></i></span>
                 </div>
             </div>
         );

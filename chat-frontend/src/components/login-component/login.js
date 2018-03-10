@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
-import "./styles.css";
+import "../../stylesheet/styles.css";
 
 
 
@@ -49,28 +49,34 @@ export default class Login extends Component {
 
             <div className="login-container">
                 <div className="login-area">
-                    <h4><strong>Login to start Chatting</strong></h4>
-                    <input type="text" className="form-control" id="handle" placeholder="Username"
+                    {/* <h4><strong>Login to start Chatting</strong></h4> */}
+                    <div className="input-container">
+                        <span><i className="far fa-user-circle" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
+                        <input type="text" className="input-box" id="handle" placeholder="Username"
 
-                        onChange={() => {
-                            this.setState(
-                                {
-                                    username: document.getElementById('handle').value,
-                                })
-                        }}
+                            onChange={() => {
+                                this.setState(
+                                    {
+                                        username: document.getElementById('handle').value,
+                                    })
+                            }}
 
-                    />
-                    <input type="password" className="form-control" id="password" placeholder="Password"
+                        />
+                    </div>
+                    <div className="input-container">
+                        <span><i className="fas fa-key" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
+                        <input type="password" className="input-box" id="password" placeholder="Password"
 
-                        onChange={() => {
-                            this.setState(
-                                {
-                                    password: document.getElementById('password').value,
-                                })
-                        }}
+                            onChange={() => {
+                                this.setState(
+                                    {
+                                        password: document.getElementById('password').value,
+                                    })
+                            }}
 
-                    />
-                    <a onClick={this.login.bind(this)} className="btn btn-primary" style={{ width: "100%" }}>Login</a>
+                        />
+                    </div>
+                    <button onClick={this.login.bind(this)} className="login-button" style={{ width: "100%" }}>LOG IN</button>
                 </div>
             </div>
         );
@@ -93,12 +99,12 @@ export default class Login extends Component {
             })
                 .then((response) => { return response.json() })
                 .then((responseJson) => {
-                    if (!responseJson.error) {
+                    if (!responseJson.success) {
                         this.cookie.set('chat_token', responseJson.token);
                         this.props.history.push("home");
                     } else {
 
-                        alert(responseJson.error);
+                        alert(responseJson.msg);
                     }
                 })
                 .catch((error) => {
@@ -116,3 +122,4 @@ export default class Login extends Component {
 
     }
 }
+

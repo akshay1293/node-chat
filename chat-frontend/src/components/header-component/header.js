@@ -15,17 +15,17 @@ export default class Header extends Component {
         return (
 
             <div className="top">
-                <div class="menu-container">
+                <div className="menu-container">
 
                 </div>
                 <div className="top-left">
                     <p>App Name</p>
                 </div>
                 <div className="top-right">
-                    <span className="glyphicon glyphicon-user" style={{ fontSize: 16, marginRight: '8px' }}></span>
-                    <div><a href="#">{this.props.user != null ? this.props.user.handle : ""}</a></div>
-                    <div class="sign-out" onClick={this.signOut.bind(this)}>
-                        <span className="glyphicon glyphicon-triangle-bottom" style={{ fontSize: 16, marginLeft: '10px', }}></span>
+                    <span><i className="far fa-user" style={{ fontSize: 14, color: "#FFF", marginRight: "8px" }}></i></span>
+                    <div><a style={{ fontSize: 14 }} href="#">{this.props.user != null ? this.props.user.user.handle : ""}</a></div>
+                    <div className="sign-out" onClick={this.signOut.bind(this)}>
+                        <span><i className="fas fa-chevron-circle-down" style={{ fontSize: 14, color: "#FFF", marginLeft: "8px" }}></i></span>
                     </div>
                 </div>
             </div>

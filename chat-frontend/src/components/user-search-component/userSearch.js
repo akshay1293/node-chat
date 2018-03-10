@@ -20,7 +20,7 @@ export default class UserSearch extends Component {
 
             <div className="search-box-container">
 
-                <input type="text" className="search-txt-box" name="search" id="search-box"
+                <input type="text" className="input-box search" name="search" id="search-box"
                     placeholder="search a user"
                     onChange={() => {
 
@@ -32,7 +32,7 @@ export default class UserSearch extends Component {
                 />
 
                 <span className="search-icon-container">
-                    <img src={searchIcon} alt="search" className="search-icon" />
+                    <i className="fas fa-search" style={{ fontSize: 18, color: "#FFF", marginBottom: "6px" }} />
                 </span>
             </div>
         );
