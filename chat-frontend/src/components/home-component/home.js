@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 // import Chat from "../chat-component/chat";
 import "../../stylesheet/styles.css";
 import Cookies from 'universal-cookie';
-import searchIcon from "../../images/search-icon.png";
 import Header from '../header-component/header';
 import ChatDisplay from '../chatDisplay-component/chatDisplay';
 import SendMeessage from '../send-message-component/sendMessage';

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import "../../stylesheet/styles.css";
-import send from "../../images/send.png";
 import io from "socket.io-client";
 import Cookies from 'universal-cookie';
 

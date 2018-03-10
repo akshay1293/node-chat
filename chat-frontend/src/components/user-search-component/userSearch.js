@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "../../stylesheet/styles.css";
-import searchIcon from "../../images/search-icon.png";
+
 
 
 export default class UserSearch extends Component {
