@@ -10,7 +10,7 @@ function create(req, res, next) {
 
             if (user.length) {
 
-                res.json({ error: "user already exists" });
+                res.json({ exists: true });
             } else {
 
                 User.create({
@@ -50,7 +50,7 @@ function login(req, res, next) {
                 res.status(200).json({ token: token, id: user.id, handle: user.handle, email: user.email });
             } else {
 
-                res.json({ error: "Incorrect Login details.." })
+                res.json({ success: false, msg: "Incorrect Login details.." })
             }
         }, function (err) {
 
