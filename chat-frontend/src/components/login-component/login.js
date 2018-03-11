@@ -50,6 +50,7 @@ export default class Login extends Component {
             <div className="login-container">
                 <div className="login-area">
                     {/* <h4><strong>Login to start Chatting</strong></h4> */}
+                    <p id="error-msg"></p>
                     <div className="input-container">
                         <span><i className="far fa-user-circle" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
                         <input type="text" className="input-box" id="handle" placeholder="Username"
@@ -62,6 +63,7 @@ export default class Login extends Component {
                             }}
 
                         />
+                        <span id="error-user"><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
                     </div>
                     <div className="input-container">
                         <span><i className="fas fa-key" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
@@ -75,7 +77,9 @@ export default class Login extends Component {
                             }}
 
                         />
+                        <span id="error-pass"><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
                     </div>
+
                     <button onClick={this.login.bind(this)} className="login-button" style={{ width: "100%" }}>LOG IN</button>
                 </div>
             </div>
@@ -99,16 +103,21 @@ export default class Login extends Component {
             })
                 .then((response) => { return response.json() })
                 .then((responseJson) => {
-                    if (!responseJson.success) {
+                    console.log(responseJson);
+                    if (responseJson.success) {
                         this.cookie.set('chat_token', responseJson.token);
                         this.props.history.push("home");
                     } else {
 
-                        alert(responseJson.msg);
+                        document.getElementById('error-user').style.display = "inline";
+                        document.getElementById('error-msg').innerText = responseJson.msg;
+                        document.getElementById('error-pass').style.display = "inline";
+                        document.getElementById('handle').style.borderBottom = "1px solid #E73A4C";
+                        document.getElementById('password').style.borderBottom = "1px solid #E73A4C";
                     }
                 })
                 .catch((error) => {
-                    alert("something is wrong please try again later");
+                    alert("something is wrong please try again later" + error);
                 });
 
         } else if (!this.state.username) {
