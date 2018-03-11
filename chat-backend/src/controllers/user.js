@@ -5,33 +5,40 @@ var config = require('../../config');
 
 function create(req, res, next) {
 
-    User.find({ handle: req.body.handle })
-        .then(function (user) {
+    let validUser = validateUser(req.body);
 
-            if (user.length) {
+    if (validUser.valid) {
 
-                res.json({ exists: true });
-            } else {
+        User.find({ handle: req.body.handle })
+            .then(function (user) {
 
-                User.create({
+                if (user.length) {
 
-                    email: req.body.email,
-                    handle: req.body.handle,
-                    password: req.body.password
-                }, function (err, result) {
+                    res.json({ exists: true, msg: "username already taken" });
+                } else {
 
-                    if (!err) {
+                    User.create({
 
-                        res.status(200).json(result);
-                    }
-                })
+                        email: req.body.email,
+                        handle: req.body.handle,
+                        password: req.body.password
+                    }, function (err, result) {
 
-            }
-        }, function (err) {
+                        if (!err) {
 
-            console.log(err);
-        })
+                            res.status(200).json({ exists: false, result });
+                        }
+                    })
 
+                }
+            }, function (err) {
+
+                console.log(err);
+            })
+    } else {
+
+        res.json({ exists: false, valid: false, msg: validUser.msg });
+    }
 
 
 }
@@ -47,7 +54,7 @@ function login(req, res, next) {
 
             if (user) {
                 var token = jwt.sign({ user: { id: user.id, handle: user.handle, email: user.email } }, config.secret, { expiresIn: 86400 });
-                res.status(200).json({ token: token, id: user.id, handle: user.handle, email: user.email });
+                res.status(200).json({ success: true, token: token, id: user.id, handle: user.handle, email: user.email });
             } else {
 
                 res.json({ success: false, msg: "Incorrect Login details.." })
@@ -69,6 +76,27 @@ function authenticate(req, res, next) {
 
         res.status(200).send({ auth: true, decoded });
     });
+
+}
+
+function validateUser(user) {
+
+    emailPattern = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,6})?$/;
+
+    if (!emailPattern.test(user.email)) {
+
+        return { valid: false, msg: "Email Invalid" };
+    } else if (user.password.length < 6) {
+
+        return { valid: false, msg: "password too short" };
+    } else if (user.password != user.confirmPassword) {
+
+        return { valid: false, msg: "passwords do not match" };
+
+    } else {
+
+        return { valid: true, msg: "success" }
+    }
 
 }
 
