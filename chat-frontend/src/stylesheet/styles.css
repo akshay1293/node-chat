@@ -188,6 +188,16 @@
     cursor: pointer;
 }
 
+#error-user,#error-pass{
+
+    display:none;
+}
+
+#error-msg{
+
+    color:#E73A4C
+}
+
 .message-area{
 
     flex:0.1;
