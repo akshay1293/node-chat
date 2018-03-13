@@ -9,6 +9,7 @@ import Users from '../users-component/users';
 import io from "socket.io-client";
 import { connect } from 'react-redux';
 import { setUser } from '../../redux/actions';
+import Config from '../../config';
 
 class Home extends Component {
 
@@ -24,6 +25,7 @@ class Home extends Component {
         }
 
         this.cookie = new Cookies();
+        this.config = new Config();
 
 
     }
@@ -38,13 +40,13 @@ class Home extends Component {
             "transports": ["websocket"]
         };
 
-        const socket = io('http://localhost:3004', connectionOptions);
+        const socket = io(this.config.getUrl(), connectionOptions);
 
         var token = this.cookie.get("chat_token")
         if (token) {
 
 
-            fetch("http://localhost:3004/verify", {
+            fetch(this.config.getUrl('verify'), {
 
                 method: 'GET',
                 headers: {

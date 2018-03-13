@@ -3,6 +3,7 @@ import Cookies from 'universal-cookie';
 import "../../stylesheet/styles.css";
 import { connect } from 'react-redux';
 import { setUser } from '../../redux/actions';
+import Config from '../../config';
 
 
 
@@ -13,6 +14,7 @@ class Login extends Component {
         super();
 
         this.cookie = new Cookies();
+        this.config = new Config();
 
         this.state = {
 
@@ -26,7 +28,7 @@ class Login extends Component {
         var token = this.cookie.get("chat_token")
         if (token) {
 
-            fetch("http://localhost:3004/verify", {
+            fetch(this.config.getUrl('verify'), {
 
                 method: 'GET',
                 headers: {
@@ -101,7 +103,7 @@ class Login extends Component {
 
         if (this.state.username && this.state.password) {
 
-            fetch("http://localhost:3004/login", {
+            fetch(this.config.getUrl("login"), {
 
                 method: 'POST',
                 headers: {

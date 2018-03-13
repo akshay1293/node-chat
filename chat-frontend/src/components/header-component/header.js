@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import "../../stylesheet/styles.css";
 import Cookies from 'universal-cookie';
+import Config from '../../config';
 
 
 export default class Header extends Component {
@@ -9,6 +10,7 @@ export default class Header extends Component {
 
         super();
         this.cookie = new Cookies();
+        this.config = new Config();
     }
     render() {
 
@@ -35,7 +37,7 @@ export default class Header extends Component {
     signOut() {
 
 
-        fetch("http://localhost:3004/signout?handle=" + this.props.user.handle, {
+        fetch(this.config.getUrl("signout?handle=" + this.props.user.handle), {
 
             method: "GET",
             headers: {
