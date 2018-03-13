@@ -2,16 +2,20 @@ import React, { Component } from 'react';
 import UserSearch from '../user-search-component/userSearch';
 import Cookies from 'universal-cookie';
 import "../../stylesheet/styles.css";
+import Config from '../../config';
 import UserList from '../userlist-component/userList';
+import { connect } from 'react-redux';
 
 
-export default class Users extends Component {
+
+class Users extends Component {
 
     constructor(props) {
 
         super();
 
         this.cookie = new Cookies();
+        this.config = new Config();
         this.state = {
 
             userArray: [],
@@ -22,7 +26,7 @@ export default class Users extends Component {
 
         let token = this.cookie.get('chat_token');
 
-        fetch("http://localhost:3004/list", {
+        fetch(this.config.getUrl("list"), {
 
             method: "GET",
             headers: {
@@ -62,10 +66,17 @@ export default class Users extends Component {
         if (this.state.userArray.length != 0) {
 
             return this.state.userArray.map((user, index) => {
+                if (user.handle !== this.props.userRed.handle) {
 
-                return <UserList user={user} key={index} />
+                    return <UserList user={user} key={index} />
+                }
+
             })
         }
     }
 
 }
+
+export default connect(({ userRed }) => ({ userRed }), {
+
+})(Users);
