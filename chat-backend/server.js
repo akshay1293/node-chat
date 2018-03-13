@@ -31,7 +31,8 @@ io.on('connection', function (socket) {
     socket.on('join', function (data) {
 
         socket.join(data.id);
-        io.sockets.in(data.id).emit('msg', { msg: 'hello' });
+        console.log("joined by :" + data.user);
+        io.sockets.in("5aa3a4bfa96aaf1d25398fe0").emit('msg', { msg: 'hello' });
     })
 
     // socket.on('chat message', function (data) {
