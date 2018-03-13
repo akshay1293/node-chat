@@ -30,9 +30,16 @@ io.on('connection', function (socket) {
 
     socket.on('join', function (data) {
 
-        socket.join(data.id);
+        socket.join(data.user);
         console.log("joined by :" + data.user);
-        io.sockets.in("5aa3a4bfa96aaf1d25398fe0").emit('msg', { msg: 'hello' });
+
+    })
+
+    socket.on('chat', function (data) {
+
+        console.log(data);
+
+        io.sockets.in(data.to).emit('msg', { msg: data.message, from: data.from });
     })
 
     // socket.on('chat message', function (data) {
