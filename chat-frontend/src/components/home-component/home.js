@@ -29,7 +29,6 @@ class Home extends Component {
     }
 
     componentWillMount() {
-        // console.log("componentwillmount");
 
         var connectionOptions = {
 
@@ -44,7 +43,6 @@ class Home extends Component {
         var token = this.cookie.get("chat_token")
         if (token) {
 
-            //this.props.history.goBack();
 
             fetch("http://localhost:3004/verify", {
 
@@ -88,7 +86,7 @@ class Home extends Component {
                 </div>
                 <div className="chat-container">
                     <div className="header-container">
-                        <Header user={this.state.user} />
+                        <Header user={this.props.userRed} />
                     </div>
                     <div className="chat-display-container">
                         <ChatDisplay />

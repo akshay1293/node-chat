@@ -23,7 +23,7 @@ export default class Header extends Component {
                 </div>
                 <div className="top-right">
                     <span><i className="far fa-user" style={{ fontSize: 14, color: "#FFF", marginRight: "8px" }}></i></span>
-                    <div><a style={{ fontSize: 14 }} href="#">{this.props.user != null ? this.props.user.user.handle : ""}</a></div>
+                    <div><a style={{ fontSize: 14 }} href="#">{this.props.user != null ? this.props.user.handle : ""}</a></div>
                     <div className="sign-out" onClick={this.signOut.bind(this)}>
                         <span><i className="fas fa-chevron-circle-down" style={{ fontSize: 14, color: "#FFF", marginLeft: "8px" }}></i></span>
                     </div>
@@ -35,7 +35,7 @@ export default class Header extends Component {
     signOut() {
 
 
-        fetch("http://localhost:3004/signout?handle=" + this.props.user.user.handle, {
+        fetch("http://localhost:3004/signout?handle=" + this.props.user.handle, {
 
             method: "GET",
             headers: {
