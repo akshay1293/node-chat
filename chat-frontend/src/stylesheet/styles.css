@@ -4,6 +4,7 @@
     letter-spacing: 1px;
     margin:0;
     padding:0;
+    
 }
 
 .login-container{
@@ -13,7 +14,6 @@
     justify-content: center;
     height:fill;
     background: #222a36;
-    
     
 }
 
@@ -77,6 +77,11 @@
     margin-top: 30px;
 }
 
+.sign-out{
+
+    border-radius:0 0 5px 5px;
+}
+
 .signup{
 
     margin-top:1px;
@@ -124,13 +129,13 @@
 }
 
 .menu-container{
-    display:none;
+    display:flex;
     position: absolute;
     background:rgba(255,255,255,0.7);
     height:200px;
     width:150px;
     right:24px;
-    top:66px;
+    top:45px;
     border-radius:9px 0px 9px 9px;
     border:1px solid darkgray;
 
@@ -144,6 +149,7 @@
     padding-top: 20px;
     background: #516B63;
     color:#FFF;
+    min-height:61px;
     /* box-shadow: darkslategray 1px 2px 3px; */
 }
 
@@ -178,6 +184,10 @@
 
 .chat-display-container{
     flex:8;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+    overflow-y: scroll;
 }
 
 .send-message-container{
@@ -328,4 +338,45 @@ textarea:focus, input:focus{
 
     flex:1;
     background: #222a36
+}
+
+.chat-display{
+    
+    padding :30px 40px;
+    justify-content: space-around;
+    
+    
+}
+
+.chat-message{
+    display: flex;
+    flex-direction: column;
+    background: #0F7E92;
+    color:#FFF;
+    padding : 5px 15px;
+    max-width: 750px;
+    margin:15px 0px;
+    border-radius:10px 10px 0 10px;
+}
+
+.message-owner{
+
+  align-self: flex-end;
+  
+}
+
+.message-owner a{
+
+    color: #06F5A5;
+    font-weight: bold;
+    font-size: 16px;
+    padding : 5px 5px;
+}   
+
+@keyframes slide {
+    0%   {width:30px}
+    25%  {width:60px}
+    50%  {width:90px}
+    75%  {width:120px}
+    100% {width:150px}
 }
