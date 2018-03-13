@@ -71,6 +71,14 @@ class Login extends Component {
                         <span><i className="fas fa-key" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
                         <input type="password" className="input-box" id="password" placeholder="Password"
 
+                            onKeyUp={(e) => {
+
+                                if (e.keyCode === 13) {
+
+                                    this.login();
+                                }
+                            }}
+
                             onChange={() => {
                                 this.setState(
                                     {
