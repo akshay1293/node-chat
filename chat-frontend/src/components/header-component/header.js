@@ -11,7 +11,7 @@ export default class Header extends Component {
         this.cookie = new Cookies();
     }
     render() {
-        console.log(this.props);
+
         return (
 
             <div className="top">
@@ -34,8 +34,31 @@ export default class Header extends Component {
 
     signOut() {
 
-        this.cookie.remove("chat_token");
-        window.location = "http://localhost:3000/";
+
+        fetch("http://localhost:3004/signout?handle=" + this.props.user.user.handle, {
+
+            method: "GET",
+            headers: {
+                'content-type': 'application/json'
+            },
+            // body: JSON.stringify({
+            //     handle: this.props.user.user.handle,
+
+            // }),
+        })
+            .then((response) => { return response.json() })
+            .then((responsejson) => {
+
+                if (responsejson.signOut) {
+
+                    this.cookie.remove("chat_token");
+                    window.location = "http://localhost:3000/";
+
+                } else {
+
+                    alert("something went wrong, Please try again later");
+                }
+            })
     }
 }
 
