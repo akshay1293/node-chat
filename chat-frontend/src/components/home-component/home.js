@@ -64,12 +64,13 @@ class Home extends Component {
 
                         let user = responsejson.decoded;
                         // console.log(responsejson.decoded.user);
-                        this.props.setUser(responsejson.decoded.user)
-                        socket.emit('join', { id: user.user.id, user: user.user.handle });
+                        this.props.setUser(responsejson.decoded.user);
+                        socket.emit('join',
+                            {
+                                user: this.props.userRed.handle,
 
-                        socket.on("msg", function (data) {
-                            console.log(data.msg);
-                        });
+                            });
+
                     }
                 })
         } else {
@@ -79,7 +80,7 @@ class Home extends Component {
     }
 
     render() {
-        console.log(this.props.userRed);
+        console.log(this.props.chatRed);
         return (
 
             <div className="main-container">
@@ -100,8 +101,9 @@ class Home extends Component {
             </div>
         );
     }
+
 }
 
-export default connect(({ userRed }) => ({ userRed }), {
+export default connect(({ userRed, chatRed }) => ({ userRed, chatRed }), {
     setUser
 })(Home);
