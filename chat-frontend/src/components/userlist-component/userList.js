@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import "../../stylesheet/styles.css";
+import { connect } from 'react-redux';
+import { setConnection } from '../../redux/actions';
 
-export default class UserList extends Component {
+class UserList extends Component {
 
     render() {
 
@@ -13,10 +15,13 @@ export default class UserList extends Component {
                 color: this.props.user.online === true ? "#5EF034" : "darkgray",
             }
         }
-       
+
         return (
 
-            <div className="user-list">
+            <div className="user-list" onClick={() => {
+
+                this.props.setConnection({ from: this.props.userRed.handle, to: this.props.user.handle });
+            }}>
                 <div>
                     <p><strong>{this.props.user.handle}</strong></p>
                     <i style={{ color: "darkgray" }}>{this.props.user.online === true ? "online" : "offline"}</i>
@@ -26,4 +31,8 @@ export default class UserList extends Component {
         );
     }
 }
+
+export default connect(({ userRed }) => ({ userRed }), {
+    setConnection,
+})(UserList);
 
