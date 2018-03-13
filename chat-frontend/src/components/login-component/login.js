@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import "../../stylesheet/styles.css";
+import { connect } from 'react-redux';
+import { setUser } from '../../redux/actions';
 
 
 
-export default class Login extends Component {
+class Login extends Component {
 
     constructor(props) {
 
@@ -20,11 +22,11 @@ export default class Login extends Component {
     }
 
     componentWillMount() {
-        console.log("ouidh");
+
         var token = this.cookie.get("chat_token")
         if (token) {
 
-            fetch("http://localhost:3003/verify", {
+            fetch("http://localhost:3004/verify", {
 
                 method: 'GET',
                 headers: {
@@ -81,6 +83,7 @@ export default class Login extends Component {
                     </div>
 
                     <button onClick={this.login.bind(this)} className="login-button" style={{ width: "100%" }}>LOG IN</button>
+                    <button className="login-button signup" style={{ width: "100%" }}>SIGN UP</button>
                 </div>
             </div>
         );
@@ -90,7 +93,7 @@ export default class Login extends Component {
 
         if (this.state.username && this.state.password) {
 
-            fetch("http://localhost:3003/login", {
+            fetch("http://localhost:3004/login", {
 
                 method: 'POST',
                 headers: {
@@ -106,6 +109,12 @@ export default class Login extends Component {
                     console.log(responseJson);
                     if (responseJson.success) {
                         this.cookie.set('chat_token', responseJson.token);
+                        this.props.setUser(
+                            {
+                                id: responseJson.id,
+                                email: responseJson.email,
+                                handle: responseJson.handle
+                            });
                         this.props.history.push("home");
                     } else {
 
@@ -132,3 +141,6 @@ export default class Login extends Component {
     }
 }
 
+export default connect(({ userRed }) => ({ userRed }), {
+    setUser,
+})(Login);

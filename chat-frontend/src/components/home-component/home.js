@@ -6,28 +6,47 @@ import Header from '../header-component/header';
 import ChatDisplay from '../chatDisplay-component/chatDisplay';
 import SendMeessage from '../send-message-component/sendMessage';
 import Users from '../users-component/users';
+import io from "socket.io-client";
+import { connect } from 'react-redux';
+import { setUser } from '../../redux/actions';
 
-export default class Home extends Component {
+class Home extends Component {
 
     constructor(props) {
+
+
 
         super();
         this.state = {
 
             searchText: null,
-            user: null,
+
         }
 
         this.cookie = new Cookies();
+
+
     }
 
     componentWillMount() {
+        // console.log("componentwillmount");
+
+        var connectionOptions = {
+
+            "force new connection": true,
+            "reconnectionAttempts": "infinity",
+            "timeout": 10000,
+            "transports": ["websocket"]
+        };
+
+        const socket = io('http://localhost:3004', connectionOptions);
+
         var token = this.cookie.get("chat_token")
         if (token) {
 
             //this.props.history.goBack();
 
-            fetch("http://localhost:3003/verify", {
+            fetch("http://localhost:3004/verify", {
 
                 method: 'GET',
                 headers: {
@@ -44,7 +63,13 @@ export default class Home extends Component {
                     } else {
 
                         let user = responsejson.decoded;
-                        this.setState({ user });
+                        // console.log(responsejson.decoded.user);
+                        this.props.setUser(responsejson.decoded.user)
+                        socket.emit('join', { id: user.user.id, user: user.user.handle });
+
+                        socket.on("msg", function (data) {
+                            console.log(data.msg);
+                        });
                     }
                 })
         } else {
@@ -54,7 +79,7 @@ export default class Home extends Component {
     }
 
     render() {
-        console.log("render");
+        console.log(this.props.userRed);
         return (
 
             <div className="main-container">
@@ -76,3 +101,7 @@ export default class Home extends Component {
         );
     }
 }
+
+export default connect(({ userRed }) => ({ userRed }), {
+    setUser
+})(Home);
