@@ -3,20 +3,6 @@ import "../../stylesheet/styles.css";
 import io from "socket.io-client";
 import Cookies from 'universal-cookie';
 
-var connectionOptions = {
-
-    "force new connection": true,
-    "reconnectionAttempts": "infinity",
-    "timeout": 10000,
-    "transports": ["websocket"]
-};
-const socket = io('http://localhost:3003', connectionOptions);
-
-socket.emit('join', { id: 0 });
-
-socket.on("msg", function (data) {
-    console.log(data.msg);
-});
 
 export default class SendMessage extends Component {
 
