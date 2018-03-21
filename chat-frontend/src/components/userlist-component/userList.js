@@ -21,6 +21,7 @@ class UserList extends Component {
             <div className="user-list" onClick={() => {
 
                 this.props.setConnection({ from: this.props.userRed.handle, to: this.props.user.handle });
+                localStorage.setItem("connection", JSON.stringify({ from: this.props.userRed.handle, to: this.props.user.handle }));
             }}>
                 <div>
                     <p><strong>{this.props.user.handle}</strong></p>
