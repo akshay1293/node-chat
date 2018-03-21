@@ -4,6 +4,7 @@ import Cookies from 'universal-cookie';
 import Config from '../../config';
 import { connect } from 'react-redux';
 
+
 class Header extends Component {
 
     constructor(props) {
@@ -14,6 +15,7 @@ class Header extends Component {
         this.state = {
 
             displayMenu: false,
+            menuIconClass: "fas fa-chevron-circle-down",
         }
     }
     render() {
@@ -22,39 +24,64 @@ class Header extends Component {
 
             display: this.state.displayMenu ? "flex" : "none",
             position: "absolute",
-            background: "rgba(255, 255, 255, 0.7)",
-            width: "150px",
-            right: "24px",
+            background: "rgb(255, 255, 255)",
+            minWidth: "150px",
+            right: this.props.position === "right" ? "24px" : "935px",
             top: "45px",
-            borderRadius: "5px 0px 5px 5px",
             border: "1px solid darkgray",
+            borderRadius: "3px",
             animationName: "slide",
-            animationDuration: "0.1s"
+            animationDuration: "0.5s"
         }
         return (
 
             <div className="top">
                 <div style={menuContainer}>
-                    <button onClick={this.signOut.bind(this)} className="login-button sign-out">SIGN OUT</button>
+                    {this.renderOptions()}
                 </div>
                 <div className="top-left">
-                    <p>{this.props.chatRed.connection.to ? this.props.chatRed.connection.to : ''}</p>
+
+                    <div><p style={{ fontSize: 14 }}>{this.props.position === "left" ? this.props.userRed.handle : this.props.chatRed.connection ? this.props.chatRed.connection.to : ""}</p></div>
+
                 </div>
                 <div className="top-right">
-                    <span><i className="far fa-user" style={{ fontSize: 14, color: "#FFF", marginRight: "8px" }}></i></span>
-                    <div><a style={{ fontSize: 14 }} href="#">{this.props.user != null ? this.props.user.handle : ""}</a></div>
-                    <div className="sign-out" onClick={() => this.setState({ displayMenu: !this.state.displayMenu })}>
-                        <span><i className="fas fa-chevron-circle-down" style={{ fontSize: 14, color: "#FFF", marginLeft: "8px" }}></i></span>
+
+                    <div className="sign-out" onClick={() => {
+                        this.setState({ displayMenu: !this.state.displayMenu });
+                    }
+                    }>
+                        <span id="menu-down"><i className="fas fa-ellipsis-v" style={{ fontSize: 16, color: "#FFF", marginLeft: "8px" }}></i></span>
                     </div>
                 </div>
             </div>
         );
     }
 
+    renderOptions() {
+
+        if (this.props.position === "right") {
+
+            return <ul className="menu-list">
+                <li><a href="#">Block</a></li>
+                <li><a href="#">View</a></li>
+            </ul>;
+
+
+        } else {
+
+            return <ul className="menu-list">
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Requests</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#" onClick={this.signOut.bind(this)}>Sign out</a></li>
+            </ul>;
+        }
+    }
+
     signOut() {
 
 
-        fetch(this.config.getUrl("signout?handle=" + this.props.user.handle), {
+        fetch(this.config.getUrl("signout?handle=" + this.props.userRed.handle), {
 
             method: "GET",
             headers: {
@@ -67,7 +94,8 @@ class Header extends Component {
                 if (responsejson.signOut) {
 
                     this.cookie.remove("chat_token");
-                    window.location = "http://localhost:3000/";
+                    localStorage.removeItem("connection");
+                    window.location = "http://172.18.3.99:3000/";
 
                 } else {
 
@@ -77,7 +105,7 @@ class Header extends Component {
     }
 }
 
-export default connect(({ chatRed }) => ({ chatRed }), {
+export default connect(({ chatRed, userRed }) => ({ chatRed, userRed }), {
 
 })(Header);
 
