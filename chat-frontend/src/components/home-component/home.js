@@ -8,8 +8,19 @@ import SendMeessage from '../send-message-component/sendMessage';
 import Users from '../users-component/users';
 import io from "socket.io-client";
 import { connect } from 'react-redux';
-import { setUser } from '../../redux/actions';
+import { setUser, setConnection } from '../../redux/actions';
 import Config from '../../config';
+
+
+var connectionOptions = {
+
+    "force new connection": true,
+    "reconnectionAttempts": "infinity",
+    "timeout": 10000,
+    "transports": ["websocket"]
+};
+const config = new Config();
+const socket = io(config.getUrl(), connectionOptions);
 
 class Home extends Component {
 
@@ -30,17 +41,7 @@ class Home extends Component {
 
     }
 
-    componentWillMount() {
-
-        var connectionOptions = {
-
-            "force new connection": true,
-            "reconnectionAttempts": "infinity",
-            "timeout": 10000,
-            "transports": ["websocket"]
-        };
-
-        const socket = io(this.config.getUrl(), connectionOptions);
+    componentDidMount() {
 
         var token = this.cookie.get("chat_token")
         if (token) {
@@ -65,6 +66,11 @@ class Home extends Component {
                         let user = responsejson.decoded;
                         // console.log(responsejson.decoded.user);
                         this.props.setUser(responsejson.decoded.user);
+                        let connection = JSON.parse(localStorage.getItem("connection"));
+                        if (connection) {
+                            this.props.setConnection(connection);
+                        }
+
                         socket.emit('join',
                             {
                                 user: this.props.userRed.handle,
@@ -80,22 +86,26 @@ class Home extends Component {
     }
 
     render() {
-        console.log(this.props.chatRed);
+        // console.log(this.props.chatRed);
+        console.log(this.props.chatRed.messages);
         return (
 
             <div className="main-container">
                 <div className="left-panel">
+                    <div className="header-container">
+                        <Header position={"left"} />
+                    </div>
                     <Users />
                 </div>
                 <div className="chat-container">
                     <div className="header-container">
-                        <Header user={this.props.userRed} />
+                        <Header position={"right"} />
                     </div>
                     <div className="chat-display-container">
-                        <ChatDisplay />
+                        <ChatDisplay socket={socket} />
                     </div>
                     <div className="send-message-container">
-                        <SendMeessage />
+                        <SendMeessage socket={socket} />
                     </div>
                 </div>
             </div>
@@ -105,5 +115,5 @@ class Home extends Component {
 }
 
 export default connect(({ userRed, chatRed }) => ({ userRed, chatRed }), {
-    setUser
+    setUser, setConnection
 })(Home);
