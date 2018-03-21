@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
 import Config from '../../config';
+import { appendMessage } from '../../redux/actions';
 
 class SendMessage extends Component {
 
@@ -16,7 +17,9 @@ class SendMessage extends Component {
         }
         this.config = new Config();
         this.cookie = new Cookies();
+
     }
+
 
     render() {
 
@@ -53,22 +56,26 @@ class SendMessage extends Component {
 
     send() {
 
-        var connectionOptions = {
+        const { socket } = this.props;
+        if (this.props.chatRed.connection.to) {
 
-            "force new connection": true,
-            "reconnectionAttempts": "infinity",
-            "timeout": 10000,
-            "transports": ["websocket"]
-        };
+            socket.emit('chat',
+                {
+                    from: this.props.chatRed.connection.from,
+                    to: this.props.chatRed.connection.to,
+                    message: this.state.message,
+                });
 
-        const socket = io(this.config.getUrl(), connectionOptions);
+            this.props.appendMessage([{ owner: this.props.chatRed.connection.from, message: this.state.message }]);
 
-        socket.emit('chat',
-            {
-                from: this.props.chatRed.connection.from,
-                to: this.props.chatRed.connection.to,
-                message: this.state.message,
-            });
+
+            document.getElementById("chat-message").value = null
+
+        } else {
+
+            alert("Please select a user to chat with");
+        }
+
 
 
 
@@ -76,5 +83,6 @@ class SendMessage extends Component {
 }
 
 export default connect(({ userRed, chatRed }) => ({ userRed, chatRed }), {
+    appendMessage
 
 })(SendMessage);
