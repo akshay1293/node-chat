@@ -54,7 +54,7 @@ function login(req, res, next) {
         .then(function (user) {
 
             if (user) {
-                toggleOnlineStatus(user);
+                toggleOnlineStatus(user, true);
                 var token = jwt.sign({ user: { id: user.id, handle: user.handle, email: user.email } }, config.secret, { expiresIn: 86400 });
                 res.status(200).json({ success: true, token: token, id: user.id, handle: user.handle, email: user.email });
             } else {
@@ -102,7 +102,7 @@ function signOut(req, res, next) {
 
             if (!err) {
 
-                toggleOnlineStatus(user);
+                toggleOnlineStatus(user, false);
                 res.json({ signOut: true, msg: "success" });
             }
         })
@@ -146,10 +146,10 @@ function validateUser(user) {
 
 }
 
-function toggleOnlineStatus(user) {
+function toggleOnlineStatus(user, status) {
 
     let query = { handle: user.handle };
-    let update = { online: !user.online };
+    let update = { online: status };
 
     User.update(query, update, function (err, res) {
 
