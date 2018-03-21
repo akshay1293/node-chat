@@ -1,10 +1,17 @@
 *{
 
     /* border:1px solid black; */
-    letter-spacing: 1px;
+    
     margin:0;
     padding:0;
+    letter-spacing: 1px;
     
+}
+
+a{
+
+    text-decoration: none;
+    color:#FFF;
 }
 
 .login-container{
@@ -12,8 +19,10 @@
     display:flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     height:fill;
     background: #222a36;
+    
     
 }
 
@@ -25,6 +34,7 @@
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
+    margin: 10px;
     background: #516B63;
     
 }
@@ -33,7 +43,50 @@
 .login-area *{
 
     margin-top: 10px;
-    letter-spacing: 1px
+    letter-spacing: 2px
+}
+
+.login-head-container{
+
+    background: rgba(39,44,57,0.4);
+    width: 100%;
+    margin:0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border-radius:5px 5px 0 0;
+    
+}
+
+.login-head{
+
+    font-size: 18px;
+    font-weight: normal;
+    letter-spacing: 2px;
+    color: #FFF;
+   
+}
+
+.login-foot{
+
+    display:flex;
+    flex-direction: row;
+    color:#BCBDBE;
+    border-bottom: 0.1em solid #808B96;
+}
+
+.login-foot a{
+
+    text-decoration: none;
+    color:#40826E;
+    padding:0 3px;
+    font-weight: 500;
+}
+
+.login-foot p{
+
+    margin-bottom: 3px;
+    font-weight: 300;
 }
 
 .input-box{
@@ -73,6 +126,7 @@
     color:#FFF;
     border:none;
     width:100%;
+    border-radius: 0 0 5px 5px;
     padding: 10px 10px;
     margin-top: 30px;
 }
@@ -111,14 +165,14 @@
 
 .left-panel{
 
-    flex:2;
+    flex:3;
     /* background: #516B63; */
 }
 
 .chat-container{
 
     display: flex;
-    flex:8;
+    flex:7;
     flex-direction: column;
     border-left:1px solid #394148
 }
@@ -136,10 +190,33 @@
     width:150px;
     right:24px;
     top:45px;
+    
     border-radius:9px 0px 9px 9px;
     border:1px solid darkgray;
 
 }
+
+.menu-list{
+
+    list-style-type: none;
+   padding:10px;
+   padding-right: 30px;
+}
+
+.menu-list li{
+
+    
+    padding:7px 0;
+    /* margin:10px; */
+
+}
+
+.menu-list a{
+
+    color:rgb(53, 52, 52);
+    text-decoration: none;  
+}
+
 
 .top{
     display:flex;
@@ -170,8 +247,7 @@
 .top-left{
 
     margin:none;
-    font-size: 22px;
-    font-weight: bold;
+    
 }
 
 .left{
@@ -188,6 +264,12 @@
     flex-direction: column-reverse;
     align-items: flex-end;
     overflow-y: scroll;
+}
+
+.chat-display{
+    
+    padding :30px 40px;
+    justify-content: space-around;   
 }
 
 .send-message-container{
@@ -296,7 +378,7 @@ textarea:focus, input:focus{
     margin-top: 20px;
     background: #262e3a;
     overflow-y: scroll;    
-    height: 500px;
+    height: 400px;
     font-size: 12px;
     font-weight: normal    
 }
@@ -340,13 +422,7 @@ textarea:focus, input:focus{
     background: #222a36
 }
 
-.chat-display{
-    
-    padding :30px 40px;
-    justify-content: space-around;
-    
-    
-}
+
 
 .chat-message{
     display: flex;
@@ -374,9 +450,16 @@ textarea:focus, input:focus{
 }   
 
 @keyframes slide {
-    0%   {width:30px}
-    25%  {width:60px}
-    50%  {width:90px}
-    75%  {width:120px}
-    100% {width:150px}
+    /* 0%   {height:40px;width:10px}
+    50%  {height:50px;width:10px}
+    75%  {height:60px;width:10px}
+    100% {height:70px;width:50px} */
+    from{opacity:0}
+    to{opacity:1}
 }
+
+#menu-down{
+
+    padding:5px;
+}
+
