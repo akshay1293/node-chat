@@ -39,7 +39,7 @@ io.on('connection', function (socket) {
 
         console.log(data);
 
-        io.sockets.in(data.to).emit('msg', { msg: data.message, from: data.from });
+        io.sockets.in(data.to).emit('msg', { msg: data.message, from: data.from, to: data.to });
     })
 
     // socket.on('chat message', function (data) {
