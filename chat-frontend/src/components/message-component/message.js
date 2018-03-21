@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "../../stylesheet/styles.css";
+import { connect } from 'react-redux';
 
 
 class Message extends Component {
@@ -10,10 +11,12 @@ class Message extends Component {
 
             <div className="chat-message">
                 <div className="message-owner">
-                    <a>me</a>
-                </div>{this.props.msg}</div>
+                    <a>{this.props.msg.owner === this.props.userRed.handle ? "me" : this.props.msg.owner}</a>
+                </div>{this.props.msg.message}</div>
         );
     }
 }
 
-export default Message;
+export default connect(({ userRed, chatRed }) => ({ userRed, chatRed }), {
+
+})(Message);
