@@ -53,8 +53,8 @@ class Login extends Component {
 
             <div className="login-container">
                 <div className="login-area">
-                    {/* <h4><strong>Login to start Chatting</strong></h4> */}
-                    <p id="error-msg"></p>
+                    <div className="login-head-container"><p className="login-head">Login To Start Chatting</p></div>
+                    <strong id="error-msg"></strong>
                     <div className="input-container">
                         <span><i className="far fa-user-circle" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
                         <input type="text" className="input-box" id="handle" placeholder="Username"
@@ -93,7 +93,12 @@ class Login extends Component {
                     </div>
 
                     <button onClick={this.login.bind(this)} className="login-button" style={{ width: "100%" }}>LOG IN</button>
-                    <button className="login-button signup" style={{ width: "100%" }}>SIGN UP</button>
+                    {/* <button className="login-button signup" style={{ width: "100%" }}>SIGN UP</button> */}
+
+                </div>
+                <div className="login-foot">
+                    <p>Don't have an account?</p>
+                    <a href="/signup">Sign up</a>
                 </div>
             </div>
         );
@@ -116,7 +121,7 @@ class Login extends Component {
             })
                 .then((response) => { return response.json() })
                 .then((responseJson) => {
-                    console.log(responseJson);
+                    // console.log(responseJson);
                     if (responseJson.success) {
                         this.cookie.set('chat_token', responseJson.token);
                         this.props.setUser(
