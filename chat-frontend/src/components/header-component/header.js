@@ -31,17 +31,19 @@ class Header extends Component {
             border: "1px solid darkgray",
             borderRadius: "3px",
             animationName: "slide",
-            animationDuration: "0.5s"
+            animationDuration: "0.3s"
         }
         return (
 
             <div className="top">
                 <div style={menuContainer}>
+
                     {this.renderOptions()}
+
                 </div>
                 <div className="top-left">
 
-                    <div><p style={{ fontSize: 14 }}>{this.props.position === "left" ? this.props.userRed.handle : this.props.chatRed.connection ? this.props.chatRed.connection.to : ""}</p></div>
+                    <div><p style={{ fontSize: 16 }}>{this.props.position === "left" ? this.props.userRed.handle : this.props.chatRed.connection ? this.props.chatRed.connection.to : ""}</p></div>
 
                 </div>
                 <div className="top-right">
