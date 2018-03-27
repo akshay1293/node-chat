@@ -4,7 +4,7 @@ var config = require('../../config');
 
 
 function create(req, res, next) {
-
+    console.log(req.body);
     let validUser = validateUser(req.body);
 
     if (validUser.valid) {
@@ -24,11 +24,12 @@ function create(req, res, next) {
                         password: req.body.password,
                         online: false,
                     }, function (err, result) {
-
+                        console.log(err);
                         if (!err) {
 
                             res.status(200).json({ exists: false, result });
                         }
+
                     })
 
                 }
@@ -130,6 +131,15 @@ function validateUser(user) {
     if (!emailPattern.test(user.email)) {
 
         return { valid: false, msg: "Email Invalid" };
+
+    } else if (user.handle === null) {
+
+        return { valid: false, msg: "please provide unique username" };
+
+    }
+    else if (user.password === null) {
+
+        return { valid: false, msg: "password empty" };
 
     } else if (user.password.length < 6) {
 
