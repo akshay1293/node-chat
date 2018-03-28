@@ -41,6 +41,7 @@ class Header extends Component {
                     {this.renderOptions()}
 
                 </div>
+
                 <div className="top-left">
 
                     <div><p style={{ fontSize: 16 }}>{this.props.position === "left" ? this.props.userRed.handle : this.props.chatRed.connection ? this.props.chatRed.connection.to : ""}</p></div>
@@ -97,6 +98,8 @@ class Header extends Component {
 
                     this.cookie.remove("chat_token");
                     localStorage.removeItem("connection");
+                    console.log(this.props.socket);
+                    this.props.socket.emit("bye", { from: this.props.userRed.handle, to: this.props.chatRed.connection.to })
                     window.location = "http://172.18.3.99:3000/";
 
                 } else {
