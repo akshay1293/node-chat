@@ -20,8 +20,8 @@ a{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height:fill;
-    min-height: 675px;
+    height:100vh;
+    /* min-height: 675px; */
     background: #222a36;
     
     
@@ -160,8 +160,8 @@ a{
 
 .main-container{
 
-    height:stretch;
-    min-height: 670px;
+    height:100vh;
+    /* min-height: 670px; */
     display:flex;
     flex-direction: row;
     background: #222a36;
@@ -170,6 +170,7 @@ a{
 .left-panel{
 
     flex:3;
+
     /* background: #516B63; */
 }
 
@@ -391,7 +392,7 @@ textarea:focus, input:focus{
 
     display:flex;
     flex-direction: column;
-    flex:8;
+    /* flex:8; */
     margin-top: 20px;
     background: #262e3a;
     overflow-y: scroll;    
@@ -486,5 +487,32 @@ textarea:focus, input:focus{
 #menu-down{
 
     padding:5px;
+}
+
+#alert-container{
+
+    position: absolute;
+    display:flex;
+    flex-direction: row;
+    background:blanchedalmond;
+    padding:10px;
+    border-radius: 6px;
+    right:20px;
+    top:100px;
+    animation-name: slide;
+    animation-duration: 0.4s;
+    box-shadow: 3px 2px 7px black;
+}
+
+.alert-text{
+
+    margin:0;
+    color:#6D716D;
+    padding-right:15px;
+}
+
+.close-alert{
+
+    cursor: pointer
 }
 
