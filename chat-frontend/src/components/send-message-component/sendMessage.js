@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import "../../stylesheet/styles.css";
-import io from "socket.io-client";
 import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
 import Config from '../../config';
@@ -66,8 +65,11 @@ class SendMessage extends Component {
                     message: this.state.message,
                 });
 
-            this.props.appendMessage([{ owner: this.props.chatRed.connection.from, message: this.state.message }]);
-
+            this.props.appendMessage(
+                {
+                    to: this.props.chatRed.connection.to,
+                    body: { owner: this.props.chatRed.connection.from, message: this.state.message }
+                });
 
             document.getElementById("chat-message").value = null
 

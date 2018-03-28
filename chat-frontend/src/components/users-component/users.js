@@ -5,6 +5,7 @@ import "../../stylesheet/styles.css";
 import Config from '../../config';
 import UserList from '../userlist-component/userList';
 import { connect } from 'react-redux';
+import { appendMessage, setConnection, createConversation } from '../../redux/actions';
 
 
 
@@ -19,12 +20,39 @@ class Users extends Component {
         this.state = {
 
             userArray: [],
+            connected: false
         }
+
+
     }
 
-    componentWillMount() {
+
+
+    componentDidMount() {
 
         let token = this.cookie.get('chat_token');
+        const { socket, appendMessage, setConnection, chatRed, createConversation } = this.props;
+
+
+        socket.on('msg', async function (data) {
+            console.log(data);
+            await setConnection({ to: data.from, from: data.to });
+            localStorage.setItem("connection", JSON.stringify({ to: data.from, from: data.to }));
+
+
+            if (!(data.from in chatRed.messages)) {
+
+                await createConversation(data.from);
+                // console.log((chatRed.connection.to in chatRed.messages));
+            }
+            console.log(chatRed.messages);
+            await appendMessage(
+                {
+                    to: data.from,
+                    body: { owner: data.from, message: data.msg }
+                });
+        })
+
 
         fetch(this.config.getUrl("list"), {
 
@@ -63,12 +91,17 @@ class Users extends Component {
 
     renderUsers() {
 
-        if (this.state.userArray.length != 0) {
+        const { chatRed } = this.props;
+
+        if (this.state.userArray.length !== 0) {
 
             return this.state.userArray.map((user, index) => {
                 if (user.handle !== this.props.userRed.handle) {
+                    if (user.handle === chatRed.connection.to) {
 
-                    return <UserList user={user} key={index} />
+                        return <UserList user={user} key={index} active={true} />
+                    } else
+                        return <UserList user={user} key={index} />
                 }
 
             })
@@ -77,6 +110,6 @@ class Users extends Component {
 
 }
 
-export default connect(({ userRed }) => ({ userRed }), {
-
+export default connect(({ userRed, chatRed }) => ({ userRed, chatRed }), {
+    appendMessage, setConnection, createConversation
 })(Users);
