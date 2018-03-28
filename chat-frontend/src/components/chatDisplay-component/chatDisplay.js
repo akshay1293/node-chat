@@ -9,31 +9,30 @@ class ChatDisplay extends Component {
 
     render() {
 
-        console.log(this.props.chatRed.messages);
+        // console.log(this.props.chatRed.messages);
         return (
 
             <div className="chat-display" id="chat-display">
 
-                {/* {this.renderMessages()} */}
+                {this.renderMessages()}
             </div>
         );
     }
 
-    // componentWillReceiveProps(prev, next) {
-    //     console.log(prev);
-    //     console.log(next);
-
-    // }
-
     renderMessages() {
 
-        if (this.props.chatRed.messages.length !== 0) {
+        const { chatRed } = this.props;
 
-            return this.props.chatRed.messages.map((message, index) => {
+        if (chatRed.messages[chatRed.connection.to] !== undefined) {
 
-                return <Message msg={message} key={index} />
+            if (chatRed.messages[chatRed.connection.to].length !== 0) {
 
-            })
+                return chatRed.messages[chatRed.connection.to].map((message, index) => {
+
+                    return <Message msg={message} key={index} />
+
+                })
+            }
         }
     }
 }
