@@ -42,6 +42,15 @@ io.on('connection', function (socket) {
         io.sockets.in(data.to).emit('msg', { msg: data.message, from: data.from, to: data.to });
     })
 
+    socket.on('bye', function (data) {
+
+        console.log(data);
+
+        io.sockets.in(data.to).emit('signedOut', { msg: "is now offline", from: data.from });
+    })
+
+
+
     // socket.on('chat message', function (data) {
 
     //     socket.emit('catch it', { message: data });
