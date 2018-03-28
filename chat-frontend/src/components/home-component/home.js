@@ -39,6 +39,7 @@ class Home extends Component {
         this.config = new Config();
 
 
+
     }
 
     componentDidMount() {
@@ -75,6 +76,16 @@ class Home extends Component {
                                 user: this.props.userRed.handle,
 
                             });
+                        socket.on("signedOut", function (data) {
+
+                            document.getElementById("alert-container").style.display = "flex";
+                            document.getElementById("alert-text").innerText = data.from + " " + data.msg;
+
+                            setTimeout(() => {
+
+                                document.getElementById("alert-container").style.display = "none";
+                            }, 9000)
+                        })
 
                     }
                 })
@@ -87,12 +98,26 @@ class Home extends Component {
     render() {
         // console.log(this.props.chatRed);
         // console.log("this.props.chatRed.messages");
+
+
+
+
         return (
 
             <div className="main-container">
+                <div id="alert-container">
+                    <p className="alert-text" id="alert-text">This is an alert this is and slet</p>
+                    <span className="close-alert" onClick={() => {
+
+                        document.getElementById("alert-container").style.display = "none";
+                    }}
+                    >
+                        <i class="fas fa-times" style={{ fontSize: 14, color: "tomato", marginLeft: 10 }}></i></span>
+
+                </div>
                 <div className="left-panel">
                     <div className="header-container">
-                        <Header position={"left"} />
+                        <Header position={"left"} socket={socket} />
                     </div>
                     <Users socket={socket} />
                 </div>
@@ -115,7 +140,7 @@ class Home extends Component {
 
             return <div className="chat-container">
                 <div className="header-container">
-                    <Header position={"right"} />
+                    <Header position={"right"} socket={socket} />
                 </div>
                 <div className="chat-display-container">
                     <ChatDisplay socket={socket} />
