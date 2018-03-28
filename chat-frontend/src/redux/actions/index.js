@@ -1,4 +1,4 @@
-import { SET_USER, APPEND_MESSAGE, SET_CONNECTION } from '../constants/actionType';
+import { SET_USER, APPEND_MESSAGE, SET_CONNECTION, CREATE_CONVERSATION } from '../constants/actionType';
 
 export const setUser = function (data) {
 
@@ -26,3 +26,17 @@ export const setConnection = function (data) {
         payload: data
     }
 }
+
+export const createConversation = function (data) {
+
+    return {
+
+        type: CREATE_CONVERSATION,
+        payload: data,
+    }
+}
+
+
+
+
+
