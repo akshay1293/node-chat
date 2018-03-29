@@ -76,6 +76,7 @@ class Home extends Component {
                                 user: this.props.userRed.handle,
 
                             });
+
                         socket.on("signedOut", function (data) {
 
                             document.getElementById("alert-container").style.display = "flex";
@@ -84,7 +85,7 @@ class Home extends Component {
                             setTimeout(() => {
 
                                 document.getElementById("alert-container").style.display = "none";
-                            }, 9000)
+                            }, 5000)
                         })
 
                     }
@@ -96,11 +97,6 @@ class Home extends Component {
     }
 
     render() {
-        // console.log(this.props.chatRed);
-        // console.log("this.props.chatRed.messages");
-
-
-
 
         return (
 
@@ -143,7 +139,7 @@ class Home extends Component {
                     <Header position={"right"} socket={socket} />
                 </div>
                 <div className="chat-display-container">
-                    <ChatDisplay socket={socket} />
+                    <div className="chat-display"><ChatDisplay socket={socket} /></div>
                 </div>
                 <div className="send-message-container">
                     <SendMeessage socket={socket} />
