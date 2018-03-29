@@ -1,3 +1,9 @@
+.deleteme {
+
+   float:right;
+   clear:right;
+}
+
 *{
 
     /* border:1px solid black; */
@@ -277,17 +283,23 @@ a{
 }
 
 .chat-display-container{
+   
     flex:8;
     display: flex;
     flex-direction: column-reverse;
     align-items: flex-end;
+    /* justify-content: flex-end; */
     overflow-y: scroll;
+   
 }
 
 .chat-display{
     
-    padding :30px 40px;
-    justify-content: space-around;   
+    /* padding :30px 40px; */
+    /* justify-content: space-around;    */
+    /* display:flex; */
+    /* flex:1; */
+    
 }
 
 .send-message-container{
@@ -449,7 +461,7 @@ textarea:focus, input:focus{
     color:#FFF;
     padding : 5px 15px;
     max-width: 750px;
-    margin:15px 0px;
+    margin:17px;
     border-radius:10px 10px 0 10px;
 }
 
@@ -492,10 +504,10 @@ textarea:focus, input:focus{
 #alert-container{
 
     position: absolute;
-    display:flex;
+    display:none;
     flex-direction: row;
     background:blanchedalmond;
-    padding:10px;
+    padding:20px;
     border-radius: 6px;
     right:20px;
     top:100px;

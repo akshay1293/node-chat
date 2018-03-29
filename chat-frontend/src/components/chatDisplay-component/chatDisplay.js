@@ -12,10 +12,10 @@ class ChatDisplay extends Component {
         // console.log(this.props.chatRed.messages);
         return (
 
-            <div className="chat-display" id="chat-display">
 
-                {this.renderMessages()}
-            </div>
+
+            this.renderMessages() ? this.renderMessages() : ""
+
         );
     }
 
