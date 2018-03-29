@@ -31,19 +31,18 @@ class UserList extends Component {
 
         return (
 
-            <div className="user-list" style={styles.active} onClick={this.userClickHandler.bind(this)}>
+            <div className="user-list" style={styles.active} onClick={this.props.user.online ? this.userClickHandler.bind(this) : () => alert(this.props.user.handle + " " + "is offline")}>
                 <div>
                     <p><strong>{this.props.user.handle}</strong></p>
                     <i style={{ color: "darkgray" }}>{this.props.user.online === true ? "online" : "offline"}</i>
                 </div>
                 <div><i className="fas fa-circle" style={styles.online}></i></div>
-            </div>
+            </div >
         );
-    }
+    }   
 
     userClickHandler() {
 
-        // console.log(this.props.user)
 
         this.props.setConnection({ from: this.props.userRed.handle, to: this.props.user.handle });
         this.setState({ clicked: true })
