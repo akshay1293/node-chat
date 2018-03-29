@@ -46,7 +46,7 @@ class SendMessage extends Component {
                         }}
                     />
                 </div>
-                <div className="send-button-container">
+                <div className="send-button-container" onClick={() => this.send()}>
                     <span style={{ alignSelf: "center" }}><i className="fas fa-paper-plane send" style={{ fontSize: 26, color: "#FFF", marginLeft: "8px", cursor: "pointer" }}></i></span>
                 </div>
             </div>
@@ -58,20 +58,24 @@ class SendMessage extends Component {
         const { socket } = this.props;
         if (this.props.chatRed.connection.to) {
 
-            socket.emit('chat',
-                {
-                    from: this.props.chatRed.connection.from,
-                    to: this.props.chatRed.connection.to,
-                    message: this.state.message,
-                });
+            if (this.state.message) {
 
-            this.props.appendMessage(
-                {
-                    to: this.props.chatRed.connection.to,
-                    body: { owner: this.props.chatRed.connection.from, message: this.state.message }
-                });
+                socket.emit('chat',
+                    {
+                        from: this.props.chatRed.connection.from,
+                        to: this.props.chatRed.connection.to,
+                        message: this.state.message,
+                    });
 
-            document.getElementById("chat-message").value = null
+                this.props.appendMessage(
+                    {
+                        to: this.props.chatRed.connection.to,
+                        body: { owner: this.props.chatRed.connection.from, message: this.state.message }
+                    });
+
+                document.getElementById("chat-message").value = null
+                this.setState({ message: null });
+            }
 
         } else {
 
