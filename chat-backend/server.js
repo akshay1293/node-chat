@@ -9,6 +9,7 @@ const routes = require('./src/routes/users');
 var config = require('./config');
 
 
+
 app.use(cors());
 
 mongoose.connect(config.db);
@@ -26,6 +27,7 @@ app.use('/', routes);
 
 
 io.set('transports', ['websocket']);
+require('./src/controllers/user').two(io);
 io.on('connection', function (socket) {
 
     socket.on('join', function (data) {
@@ -46,7 +48,7 @@ io.on('connection', function (socket) {
 
         console.log(data);
 
-        io.sockets.in(data.to).emit('signedOut', { msg: "is now offline", from: data.from });
+        io.sockets.emit('signedOut', { msg: "is now offline", from: data.from });
     })
 
 
