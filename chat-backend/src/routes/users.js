@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-var ctrl = require('../controllers/user');
+var controller = require('../controllers/user');
+var ctrl = controller.one;
 
 router.route('/create').post(ctrl.create);
 router.route('/login').post(ctrl.login);
