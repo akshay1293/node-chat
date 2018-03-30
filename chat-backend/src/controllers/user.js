@@ -1,7 +1,7 @@
 var User = require('../models/users');
 var jwt = require('jsonwebtoken');
 var config = require('../../config');
-
+var io;
 
 function create(req, res, next) {
     console.log(req.body);
@@ -58,6 +58,7 @@ function login(req, res, next) {
                 toggleOnlineStatus(user, true);
                 var token = jwt.sign({ user: { id: user.id, handle: user.handle, email: user.email } }, config.secret, { expiresIn: 86400 });
                 res.status(200).json({ success: true, token: token, id: user.id, handle: user.handle, email: user.email });
+                io.sockets.emit('hi', { user: user.handle });
             } else {
 
                 res.json({ success: false, msg: "Incorrect Login details.." })
@@ -176,4 +177,4 @@ function toggleOnlineStatus(user, status) {
 
 
 
-module.exports = { create, login, authenticate, list, signOut };
+module.exports = { one: { create, login, authenticate, list, signOut }, two: function (socket) { io = socket } };
