@@ -34,12 +34,12 @@ class UserList extends Component {
             <div className="user-list" style={styles.active} onClick={this.props.user.online ? this.userClickHandler.bind(this) : () => alert(this.props.user.handle + " " + "is offline")}>
                 <div>
                     <p><strong>{this.props.user.handle}</strong></p>
-                    <i style={{ color: "darkgray" }}>{this.props.user.online === true ? "online" : "offline"}</i>
+                    <i id={this.props.user.handle + "-" + "status"} style={{ color: "darkgray" }}>{this.props.user.online === true ? "online" : "offline"}</i>
                 </div>
-                <div><i className="fas fa-circle" style={styles.online}></i></div>
+                <div><i className="fas fa-circle" id={this.props.user.handle} style={styles.online}></i></div>
             </div >
         );
-    }   
+    }
 
     userClickHandler() {
 
