@@ -4,6 +4,12 @@
    clear:right;
 }
 
+@font-face{
+
+    font-family: century-gothic;
+    src:url("./fonts/century-gothic.ttf")
+}
+
 *{
 
     /* border:1px solid black; */
@@ -11,6 +17,7 @@
     margin:0;
     padding:0;
     letter-spacing: 1px;
+    font-family: century-gothic;
     
 }
 
@@ -221,6 +228,7 @@ a{
 .menu-list{
 
     list-style-type: none;
+    font-weight: bold;
    padding:10px;
    padding-right: 30px;
    
