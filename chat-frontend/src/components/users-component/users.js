@@ -53,6 +53,18 @@ class Users extends Component {
                 });
         })
 
+        socket.on('hi', function (data) {
+
+            document.getElementById(data.user).style.color = "#5EF034";
+            document.getElementById(data.user + "-" + "status").innerText = "online";
+        })
+
+        socket.on('signedOut', function (data) {
+
+            document.getElementById(data.from).style.color = "darkgray";
+            document.getElementById(data.from + "-" + "status").innerText = "offline";
+        })
+
 
         fetch(this.config.getUrl("list"), {
 
