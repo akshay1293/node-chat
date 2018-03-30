@@ -15,7 +15,7 @@ class Header extends Component {
         this.state = {
 
             displayMenu: false,
-            menuIconClass: "fas fa-chevron-circle-down",
+
         }
     }
     render() {
