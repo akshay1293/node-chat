@@ -77,23 +77,33 @@ class Home extends Component {
 
                             });
 
+
+
                         socket.on("signedOut", function (data) {
 
-                            document.getElementById("alert-container").style.display = "flex";
-                            document.getElementById("alert-text").innerText = data.from + " " + data.msg;
-
-                            setTimeout(() => {
-
-                                document.getElementById("alert-container").style.display = "none";
-                            }, 5000)
-                        })
+                            this.showAlert(data.from + ' ' + data.msg);
+                        }.bind(this))
 
                     }
+                }).catch((err) => {
+
+                    this.showAlert("unable to get data");
                 })
         } else {
 
             window.location = "http://localhost:3000/";
         }
+    }
+
+    showAlert(alert) {
+
+        document.getElementById("alert-container").style.display = "flex";
+        document.getElementById("alert-text").innerText = alert;
+
+        setTimeout(() => {
+
+            document.getElementById("alert-container").style.display = "none";
+        }, 5000)
     }
 
     render() {
