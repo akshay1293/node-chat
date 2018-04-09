@@ -4,22 +4,24 @@ import "../../stylesheet/styles.css";
 import { connect } from 'react-redux';
 import { setUser } from '../../redux/actions';
 import Config from '../../config';
+import loader from '../../gif/ajax-loading.gif'
 
 
 
 class Login extends Component {
 
+   
     constructor(props) {
 
         super();
 
         this.cookie = new Cookies();
         this.config = new Config();
-
+        // this.date = new Date().getDate() + "-" + new Date().getMonth() + "-" + new Date().getFullYear()
         this.state = {
 
             username: null,
-            password: null
+            password: null,
         }
     }
 
@@ -52,7 +54,8 @@ class Login extends Component {
         return (
 
             <div className="login-container">
-                <div className="login-area">
+                <img id="loader" src={loader} className="loader" />
+                <div id="login-area" className="login-area">
                     <div className="login-head-container"><p className="login-head">Login To Start Chatting</p></div>
                     <strong id="error-msg"></strong>
                     <div className="input-container">
@@ -107,7 +110,8 @@ class Login extends Component {
     login() {
 
         if (this.state.username && this.state.password) {
-
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('login-area').style.filter = "blur(3px)";
             fetch(this.config.getUrl("login"), {
 
                 method: 'POST',
@@ -141,6 +145,8 @@ class Login extends Component {
                     }
                 })
                 .catch((error) => {
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('login-area').style.filter = "blur(0px)";
                     alert("something is wrong please try again later" + error);
                 });
 
