@@ -10,7 +10,7 @@ import loader from '../../gif/ajax-loading.gif'
 
 class Login extends Component {
 
-   
+
     constructor(props) {
 
         super();
@@ -136,7 +136,8 @@ class Login extends Component {
                             });
                         this.props.history.push("home");
                     } else {
-
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('login-area').style.filter = "blur(0px)"
                         document.getElementById('error-user').style.display = "inline";
                         document.getElementById('error-msg').innerText = responseJson.msg;
                         document.getElementById('error-pass').style.display = "inline";
