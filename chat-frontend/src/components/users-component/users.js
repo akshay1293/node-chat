@@ -5,7 +5,9 @@ import "../../stylesheet/styles.css";
 import Config from '../../config';
 import UserList from '../userlist-component/userList';
 import { connect } from 'react-redux';
-import { appendMessage, setConnection, createConversation } from '../../redux/actions';
+import { appendMessage, setConnection, createConversation, userRed } from '../../redux/actions';
+import Sound from 'react-sound';
+import incomingMessageSound from '../../sounds/incoming.mp3';
 
 
 
@@ -20,7 +22,8 @@ class Users extends Component {
         this.state = {
 
             userArray: [],
-            connected: false
+            connected: false,
+            playing: false,
         }
 
 
@@ -30,12 +33,13 @@ class Users extends Component {
 
     componentDidMount() {
 
-        let token = this.cookie.get('chat_token');
-        const { socket, appendMessage, setConnection, chatRed, createConversation } = this.props;
+
+        const { socket, appendMessage, setConnection, chatRed, userRed, createConversation } = this.props;
 
 
         socket.on('msg', async function (data) {
             console.log(data);
+            this.setState({ playing: true });
             await setConnection({ to: data.from, from: data.to });
             localStorage.setItem("connection", JSON.stringify({ to: data.from, from: data.to }));
 
@@ -51,20 +55,34 @@ class Users extends Component {
                     to: data.from,
                     body: { owner: data.from, message: data.msg }
                 });
-        })
+        }.bind(this))
 
         socket.on('hi', function (data) {
+            console.log(data.user);
+            // if (data.user !== userRed.handle) {
+            //     document.getElementById(data.user).style.color = "#5EF034";
+            //     document.getElementById(data.user + "-" + "status").innerText = "online";
 
-            document.getElementById(data.user).style.color = "#5EF034";
-            document.getElementById(data.user + "-" + "status").innerText = "online";
-        })
+            //     
+            // }
+            // this.forceUpdate();
+            this.getUsers();
+        }.bind(this))
 
         socket.on('signedOut', function (data) {
 
-            document.getElementById(data.from).style.color = "darkgray";
-            document.getElementById(data.from + "-" + "status").innerText = "offline";
+            // document.getElementById(data.from).style.color = "darkgray";
+            // document.getElementById(data.from + "-" + "status").innerText = "offline";
         })
 
+        this.getUsers();
+
+
+    }
+
+    getUsers() {
+
+        let token = this.cookie.get('chat_token');
 
         fetch(this.config.getUrl("list"), {
 
@@ -80,6 +98,7 @@ class Users extends Component {
                 let userArray = responseJson;
                 this.setState({ userArray });
             })
+
     }
 
     render() {
@@ -87,6 +106,10 @@ class Users extends Component {
         return (
 
             <div className="left">
+                <Sound
+                    url={incomingMessageSound}
+                    playStatus={this.state.playing === true ? Sound.status.PLAYING : ""}
+                />
                 <div className="user-search-container">
                     <UserSearch />
                 </div>
