@@ -28,4 +28,6 @@ const UserSchema = new mongoose.Schema({
     }
 });
 
+UserSchema.index({ handle: 'text' });
+
 module.exports = mongoose.model('user', UserSchema);

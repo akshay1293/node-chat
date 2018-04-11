@@ -125,6 +125,22 @@ function authenticate(req, res, next) {
 
 }
 
+function search(req, res) {
+
+    var searchText = req.query.searchText;
+
+    User.find({ handle: { $regex: /$searchText$/ } })
+        .limit(10)
+        .exec(function (err, docs) {
+
+            if (err)
+                console.log(err);
+
+            console.log(docs);
+
+        });
+}
+
 function validateUser(user) {
 
     emailPattern = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,6})?$/;
@@ -177,4 +193,4 @@ function toggleOnlineStatus(user, status) {
 
 
 
-module.exports = { one: { create, login, authenticate, list, signOut }, two: function (socket) { io = socket } };
+module.exports = { one: { create, login, authenticate, list, signOut, search }, two: function (socket) { io = socket } };

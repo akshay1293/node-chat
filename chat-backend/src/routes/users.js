@@ -8,5 +8,6 @@ router.route('/login').post(ctrl.login);
 router.route('/verify').get(ctrl.authenticate);
 router.route('/list').get(ctrl.list);
 router.route('/signout').get(ctrl.signOut);
+router.route('/search').get(ctrl.search);
 
 module.exports = router;
