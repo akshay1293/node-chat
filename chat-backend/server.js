@@ -10,10 +10,11 @@ var config = require('./config');
 
 
 
+
 app.use(cors());
 
 mongoose.connect(config.db);
-mongoose.connection.on('error', () => {
+mongoose.connection.on('error', (err) => {
     throw new Error("unable to connect to database");
 });
 mongoose.connection.on('connected', () => {
@@ -50,14 +51,8 @@ io.on('connection', function (socket) {
 
         io.sockets.emit('signedOut', { msg: "is now offline", from: data.from });
     })
-
-
-
-    // socket.on('chat message', function (data) {
-
-    //     socket.emit('catch it', { message: data });
-    // });
 });
+
 server.listen(config.port, function () {
 
     console.log("server is running...");
