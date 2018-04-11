@@ -7,7 +7,8 @@ import UserList from '../userlist-component/userList';
 import { connect } from 'react-redux';
 import { appendMessage, setConnection, createConversation, userRed } from '../../redux/actions';
 import Sound from 'react-sound';
-import incomingMessageSound from '../../sounds/incoming.mp3';
+import incomingMessageSound from '../../sounds/incomingMessage.mp3';
+
 
 
 
@@ -58,22 +59,16 @@ class Users extends Component {
         }.bind(this))
 
         socket.on('hi', function (data) {
-            console.log(data.user);
-            // if (data.user !== userRed.handle) {
-            //     document.getElementById(data.user).style.color = "#5EF034";
-            //     document.getElementById(data.user + "-" + "status").innerText = "online";
 
-            //     
-            // }
-            // this.forceUpdate();
             this.getUsers();
+
         }.bind(this))
 
         socket.on('signedOut', function (data) {
 
-            // document.getElementById(data.from).style.color = "darkgray";
-            // document.getElementById(data.from + "-" + "status").innerText = "offline";
-        })
+            this.getUsers();
+
+        }.bind(this))
 
         this.getUsers();
 
