@@ -12,6 +12,7 @@ import Config from '../../config';
 import Info from '../info-component/info';
 
 
+
 var connectionOptions = {
 
     "force new connection": true,
@@ -80,8 +81,11 @@ class Home extends Component {
 
 
                         socket.on("signedOut", function (data) {
+                            if (data.from === this.props.chatRed.connection.to) {
 
-                            this.showAlert(data.from + ' ' + data.msg);
+                                this.showAlert(data.from + ' ' + data.msg);
+                            }
+
                         }.bind(this))
 
                     }
@@ -111,6 +115,7 @@ class Home extends Component {
         return (
 
             <div className="main-container">
+
                 <div id="alert-container">
                     <p className="alert-text" id="alert-text">This is an alert this is and slet</p>
                     <span className="close-alert" onClick={() => {
@@ -129,6 +134,7 @@ class Home extends Component {
                 </div>
 
                 {this.renderChatOrInfo()}
+
             </div>
         );
     }
