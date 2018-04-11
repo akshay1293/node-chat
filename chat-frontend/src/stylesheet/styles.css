@@ -38,6 +38,7 @@ a{
     background: #222a36;
     
     
+    
 }
 
 
@@ -52,6 +53,7 @@ a{
     flex-direction: column;
     margin: 10px;
     background: #516B63;
+    
     
 }
 
@@ -534,5 +536,15 @@ textarea:focus, input:focus{
 .close-alert{
 
     cursor: pointer
+}
+
+.loader{
+
+    position: absolute;
+    display:none;
+    top:40vh;
+    height:100px;
+    width:100px;
+    z-index:10;
 }
 
