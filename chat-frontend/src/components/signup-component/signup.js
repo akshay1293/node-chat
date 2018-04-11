@@ -103,10 +103,10 @@ export default class Signup extends Component {
                 } else if (!responseJson.valid) {
 
                     this.setState({ error: responseJson.msg });
-                } else {
+                } else if (responseJson.result) {
 
-                    document.getElementById("error-msg").innerHTML = "<p>account created succesfully</p> <a href=" / ">click here</a> <p>to login</p>"
-
+                    // document.getElementById("error-msg").innerHTML = "<p>account created succesfully</p> <a href=" / ">click here</a> <p>to login</p>"
+                    this.setState({ success: "Acoount created succesfully" });
                 }
             })
 
