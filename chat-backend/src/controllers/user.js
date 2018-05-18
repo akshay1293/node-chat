@@ -1,6 +1,9 @@
 var User = require('../models/users');
 var jwt = require('jsonwebtoken');
 var config = require('../../config');
+var nodemailer = require('nodemailer');
+var sgTransport = require('nodemailer-sendgrid-transport');
+var Email = require('./email');
 var io;
 
 function create(req, res, next) {
@@ -111,6 +114,48 @@ function signOut(req, res, next) {
 
 }
 
+function forgotPassword(req, res, next) {
+
+    if (!req.query) {
+
+        res.status(400).json({ success: false, msg: "email not found" });
+    } else {
+
+        User.findOne({
+
+            email: req.query.email
+        }, function (user, err) {
+
+            if (err) {
+                console.log(err);
+            }
+
+            if (user) {
+                var email = req.query.email;
+                Email.sendTo(email)
+                    .then((response) => {
+
+                        res.status(200).send({ success: true, msg: "Instructions to reset your password has been sent to you via mail" });
+                    })
+                    .catch((err) => {
+
+                        console.log(err);
+                        res.json({ success: false, msg: "email you provided seems wrong " })
+                    })
+            } else {
+
+                res.json({ success: false, msg: "Email not registered with us, try signUp insted " });
+
+            }
+
+
+        })
+
+
+    }
+
+}
+
 function authenticate(req, res, next) {
 
 
@@ -193,4 +238,4 @@ function toggleOnlineStatus(user, status) {
 
 
 
-module.exports = { one: { create, login, authenticate, list, signOut, search }, two: function (socket) { io = socket } };
+module.exports = { one: { create, login, authenticate, list, signOut, search, forgotPassword }, two: function (socket) { io = socket } };

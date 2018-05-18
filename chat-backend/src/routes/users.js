@@ -9,5 +9,6 @@ router.route('/verify').get(ctrl.authenticate);
 router.route('/list').get(ctrl.list);
 router.route('/signout').get(ctrl.signOut);
 router.route('/search').get(ctrl.search);
+router.route('/forgotPassword').get(ctrl.forgotPassword);
 
 module.exports = router;

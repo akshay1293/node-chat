@@ -15,6 +15,9 @@
     "express": "^4.16.2",
     "jsonwebtoken": "^8.2.0",
     "mongoose": "^5.0.9",
+    "nodemailer": "^4.6.4",
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "promise": "^8.0.1",
     "socket.io": "^2.0.4"
   }
 }
