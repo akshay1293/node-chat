@@ -47,6 +47,7 @@ a{
     border-radius:5px;
     /* padding:20px 40px; */
     min-width:350px;
+    max-width: 350px;
     display:flex;
     align-items: center;
     justify-content: space-between;
@@ -88,9 +89,10 @@ a{
 .login-foot{
 
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     color:#BCBDBE;
-    border-bottom: 0.1em solid #808B96;
+    /* border-bottom: 0.1em solid #808B96; */
 }
 
 .login-foot a{
@@ -99,6 +101,12 @@ a{
     color:#40826E;
     padding:0 3px;
     font-weight: 500;
+}
+
+.footer-signup{
+
+    display:flex;
+    flex-direction:row; 
 }
 
 .login-foot p{
@@ -338,7 +346,10 @@ a{
 
 #error-msg{
 
-    color:#E73A4C
+    color:rgb(124,10,2);
+    padding:7px;
+    text-align: center;
+    
 }
 
 .message-area{
