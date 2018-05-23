@@ -4,6 +4,7 @@ var config = require('../../config');
 var nodemailer = require('nodemailer');
 var sgTransport = require('nodemailer-sendgrid-transport');
 var Email = require('./email');
+const bcrypt = require('bcrypt');
 var io;
 
 function create(req, res, next) {
@@ -53,19 +54,31 @@ function login(req, res, next) {
     User.findOne(
         {
             handle: req.body.handle,
-            password: req.body.password
+
         })
         .then(function (user) {
 
             if (user) {
-                toggleOnlineStatus(user, true);
-                var token = jwt.sign({ user: { id: user.id, handle: user.handle, email: user.email } }, config.secret, { expiresIn: 86400 });
-                res.status(200).json({ success: true, token: token, id: user.id, handle: user.handle, email: user.email });
-                io.sockets.emit('hi', { user: user.handle });
+
+                bcrypt.compare(req.body.password, user.password, function (err, result) {
+                    console.log(result);
+                    if (!result) {
+
+                        res.json({ success: false, msg: "Incorrect Login details.." })
+                    } else {
+
+                        toggleOnlineStatus(user, true);
+                        var token = jwt.sign({ user: { id: user.id, handle: user.handle, email: user.email } }, config.secret, { expiresIn: 86400 });
+                        res.status(200).json({ success: true, token: token, id: user.id, handle: user.handle, email: user.email });
+                        io.sockets.emit('hi', { user: user.handle });
+                    }
+                })
             } else {
 
                 res.json({ success: false, msg: "Incorrect Login details.." })
             }
+
+
         }, function (err) {
 
             console.log(err);
