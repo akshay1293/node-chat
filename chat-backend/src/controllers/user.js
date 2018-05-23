@@ -124,13 +124,12 @@ function forgotPassword(req, res, next) {
         User.findOne({
 
             email: req.query.email
-        }, function (user, err) {
+        }, function (err, user) {
 
             if (err) {
                 console.log(err);
             }
-
-            if (user) {
+            if (user !== null) {
                 var email = req.query.email;
                 Email.sendTo(email)
                     .then((response) => {
@@ -153,6 +152,43 @@ function forgotPassword(req, res, next) {
 
 
     }
+
+}
+
+function resetPassword(req, res, next) {
+
+    if (!req.body) {
+
+        res.status(400).json({ success: false, msg: "can't update password" });
+    } else {
+
+        let email = req.body.email;
+
+        let query = { email: email };
+        console.log(email);
+
+        User.findOne(query, function (err, doc) {
+
+            if (err) {
+                console.log(err);
+                res.json({ success: false, msg: "some error occured while updating password, Please try again later" })
+
+            } else {
+
+                doc.password = req.body.password;
+                doc.save()
+                    .then((savedUser) => {
+
+                        res.status(202).json({ success: true, msg: "password updated succesfully" });
+                        console.log(savedUser);
+                    })
+            }
+
+
+        })
+    }
+
+
 
 }
 
@@ -238,4 +274,4 @@ function toggleOnlineStatus(user, status) {
 
 
 
-module.exports = { one: { create, login, authenticate, list, signOut, search, forgotPassword }, two: function (socket) { io = socket } };
+module.exports = { one: { create, login, authenticate, list, signOut, search, forgotPassword, resetPassword }, two: function (socket) { io = socket } };
