@@ -96,12 +96,15 @@ class Login extends Component {
                     </div>
 
                     <button onClick={this.login.bind(this)} className="login-button" style={{ width: "100%" }}>LOG IN</button>
-                    {/* <button className="login-button signup" style={{ width: "100%" }}>SIGN UP</button> */}
-
                 </div>
                 <div className="login-foot">
-                    <p>Don't have an account?</p>
-                    <a href="/signup">Sign up</a>
+                    <div className="footer-signup">
+                        <p>Don't have an account?</p>
+                        <a href="/signup">Sign up</a>
+                    </div>
+                    <div>
+                        <a href="#" onClick={this.forgotPasswordClick.bind(this)}>Forgot Password?</a>
+                    </div>
                 </div>
             </div>
         );
@@ -136,6 +139,8 @@ class Login extends Component {
                             });
                         this.props.history.push("home");
                     } else {
+                        /**show/hide loader and display login errors  */
+
                         document.getElementById('loader').style.display = 'none';
                         document.getElementById('login-area').style.filter = "blur(0px)"
                         document.getElementById('error-user').style.display = "inline";
@@ -160,6 +165,11 @@ class Login extends Component {
             alert("Please enter your password");
         }
 
+    }
+
+    forgotPasswordClick() {
+
+        window.location = "http://localhost:3000/registeredemail";
     }
 }
 
