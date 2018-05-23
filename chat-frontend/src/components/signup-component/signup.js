@@ -40,7 +40,7 @@ export default class Signup extends Component {
 
                             this.setState({ email: document.getElementById("email").value })
                         }}
-                            className="input-box" id="email" placeholder="EMAIL"
+                            className="input-box" id="email" placeholder="Email"
                         />
                     </div>
                     <div className="input-container">
@@ -49,7 +49,7 @@ export default class Signup extends Component {
 
                             this.setState({ handle: document.getElementById("username").value });
 
-                        }} className="input-box" id="username" placeholder="USERNAME"
+                        }} className="input-box" id="username" placeholder="Username"
                         />
                     </div>
                     <div className="input-container">
@@ -58,7 +58,7 @@ export default class Signup extends Component {
 
                             this.setState({ password: document.getElementById("password").value })
 
-                        }} className="input-box" id="password" placeholder="PASSWORD"
+                        }} className="input-box" id="password" placeholder="Password"
                         />
                     </div>
                     <div className="input-container">
@@ -67,12 +67,17 @@ export default class Signup extends Component {
 
                             this.setState({ confirmPassword: document.getElementById("confirmPassword").value })
 
-                        }} className="input-box" id="confirmPassword" placeholder="CONFIRM PASSWORD"
+                        }} className="input-box" id="confirmPassword" placeholder="Confirm Password "
                         />
                     </div>
                     <button onClick={this.signup.bind(this)} id="signup" className="login-button" style={{ width: "100%" }}>SIGN UP</button>
                 </div>
-                {}
+                <div className="login-foot">
+                    <div className="footer-signup">
+                        <p>Click to</p>
+                        <a href="/">Login</a>
+                    </div>
+                </div>
             </div>
         );
     }
