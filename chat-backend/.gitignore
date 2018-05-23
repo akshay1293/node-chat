@@ -2,3 +2,4 @@
 npm-debug.log*
 temp.js
 package-lock.json
+/.vscode
