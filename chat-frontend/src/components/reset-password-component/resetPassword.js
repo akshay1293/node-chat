@@ -156,7 +156,7 @@ export default class ResetPassword extends Component {
                     if (responseJson.success) {
                         document.getElementById("error-msg").style.color = "#043927";
                         document.getElementById("error-msg").innerText = responseJson.msg;
-                        document.getElementById("error-msg").appendChild('<a href="#">click here</a>');
+
                     } else {
 
                         document.getElementById("error-msg").innerText = responseJson.msg;
