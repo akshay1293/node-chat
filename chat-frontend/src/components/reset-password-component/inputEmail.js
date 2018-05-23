@@ -46,6 +46,12 @@ export default class InputEmail extends Component {
 
 
                 </div>
+                <div className="login-foot">
+                    <div className="footer-signup">
+                        <p>Don't have an account?</p>
+                        <a href="/signup">Sign up</a>
+                    </div>
+                </div>
             </div>
         );
     }
