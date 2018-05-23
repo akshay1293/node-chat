@@ -25,7 +25,7 @@ class Email {
             to: to,
             subject: 'Account Confirmation',
             //text: 'Your chat account has been created succesfully',
-            html: '<p>Hi,<br><br>click <a href="http://localhost:3000/resetpassword?token=' + token + '">here</a> to reset your password</p><p><b>This link is valid for 1 hour only</b></p>'
+            html: '<p>Hi,<br><br>Looks like you requested a new password<br>If that sounds right click the below link to enter a new passsword<br><br><a href="http://localhost:3000/resetpassword?token=' + token + '">reset password</a></p><p><b>This link is valid for 1 hour only</b></p>'
         };
 
         return new Promise(function (resolve, reject) {
