@@ -25,7 +25,12 @@ const UserSchema = new mongoose.Schema({
 
     online: {
         type: Boolean,
+    },
+    active: {
+
+        type: Boolean,
     }
+
 });
 
 UserSchema.pre('save', function (next) {

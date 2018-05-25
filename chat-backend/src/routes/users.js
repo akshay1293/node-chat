@@ -10,6 +10,7 @@ router.route('/list').get(ctrl.list);
 router.route('/signout').get(ctrl.signOut);
 router.route('/search').get(ctrl.search);
 router.route('/forgotPassword').get(ctrl.forgotPassword);
+router.route('/confirmAccount').get(ctrl.confirmAccount);
 router.route('/resetPassword').put(ctrl.resetPassword);
 
 module.exports = router;

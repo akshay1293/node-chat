@@ -30,8 +30,16 @@ function create(req, res, next) {
                     }, function (err, result) {
                         console.log(err);
                         if (!err) {
+                            Email.sendTo(req.body.email, "confirm")
+                                .then((response) => {
 
-                            res.status(200).json({ exists: false, result });
+                                    res.status(200).send({ exists: false, msg: "Email has been sent to you with the link to confirm your account" });
+                                })
+                                .catch((err) => {
+
+                                    console.log(err);
+                                    res.json({ exists: true, msg: "email you provided seems wrong " })
+                                })
                         }
 
                     })
@@ -60,19 +68,25 @@ function login(req, res, next) {
 
             if (user) {
 
-                bcrypt.compare(req.body.password, user.password, function (err, result) {
-                    console.log(result);
-                    if (!result) {
+                if (user.active) {
+                    bcrypt.compare(req.body.password, user.password, function (err, result) {
+                        console.log(result);
+                        if (!result) {
 
-                        res.json({ success: false, msg: "Incorrect Login details.." })
-                    } else {
+                            res.json({ success: false, msg: "Incorrect Login details.." })
+                        } else {
 
-                        toggleOnlineStatus(user, true);
-                        var token = jwt.sign({ user: { id: user.id, handle: user.handle, email: user.email } }, config.secret, { expiresIn: 86400 });
-                        res.status(200).json({ success: true, token: token, id: user.id, handle: user.handle, email: user.email });
-                        io.sockets.emit('hi', { user: user.handle });
-                    }
-                })
+                            toggleOnlineStatus(user, true);
+                            var token = jwt.sign({ user: { id: user.id, handle: user.handle, email: user.email } }, config.secret, { expiresIn: 86400 });
+                            res.status(200).json({ success: true, token: token, id: user.id, handle: user.handle, email: user.email });
+                            io.sockets.emit('hi', { user: user.handle });
+                        }
+                    })
+
+                } else {
+
+                    res.json({ success: false, msg: "account not verified" });
+                }
             } else {
 
                 res.json({ success: false, msg: "Incorrect Login details.." })
@@ -94,19 +108,19 @@ function list(req, res, next) {
 
     } else {
 
-        jwt.verify(token, config.secret, function (err, decoded) {
+        verifyToken(token)
+            .then((decoded) => {
 
-            if (err) {
+                User.find()
+                    .skip(skip)
+                    .limit(limit)
+                    .exec()
+                    .then((users) => res.json(users))
+            })
+            .catch((err) => {
 
                 return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-            }
-
-            User.find()
-                .skip(skip)
-                .limit(limit)
-                .exec()
-                .then((users) => res.json(users))
-        })
+            })
     }
 }
 
@@ -144,7 +158,7 @@ function forgotPassword(req, res, next) {
             }
             if (user !== null) {
                 var email = req.query.email;
-                Email.sendTo(email)
+                Email.sendTo(email, "reset")
                     .then((response) => {
 
                         res.status(200).send({ success: true, msg: "Instructions to reset your password has been sent to you via mail" });
@@ -211,11 +225,29 @@ function authenticate(req, res, next) {
     var token = req.headers['x-access-token'];
     if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
-    jwt.verify(token, config.secret, function (err, decoded) {
-        if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    verifyToken(token)
+        .then((decoded) => {
 
-        res.status(200).send({ auth: true, decoded });
-    });
+            res.status(200).send({ auth: true, decoded });
+        })
+        .catch((err) => {
+            res.status(500).send({ auth: false, message: 'Unauthorized Access' });
+
+        })
+
+}
+
+function verifyToken(token) {
+
+    return new Promise(function (resolve, reject) {
+
+        jwt.verify(token, config.secret, function (err, decoded) {
+            if (err)
+                reject(error);
+
+            resolve(decoded);
+        });
+    })
 
 }
 
@@ -285,6 +317,26 @@ function toggleOnlineStatus(user, status) {
 
 }
 
+function confirmAccount(req, res, next) {
+
+    var token = req.query.token;
+
+    if (!token) {
+
+        return res.send("unauthorized access");
+
+    }
+    verifyToken(token)
+        .then((decoded) => {
+
+            res.redirect("localhost:3000/");
+        })
+        .catch((err) => {
+            return res.send("unauthorized access");
+
+        })
+
+}
 
 
-module.exports = { one: { create, login, authenticate, list, signOut, search, forgotPassword, resetPassword }, two: function (socket) { io = socket } };
+module.exports = { one: { create, login, authenticate, list, signOut, search, forgotPassword, resetPassword, confirmAccount }, two: function (socket) { io = socket } };
