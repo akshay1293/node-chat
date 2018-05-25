@@ -33,7 +33,7 @@ export default class Signup extends Component {
             <div className="login-container">
                 <div className="login-area">
                     <div className="login-head-container"><p className="login-head">Create New Account</p></div>
-                    <strong id="error-msg">{this.state.error ? this.state.error : this.state.success}</strong>
+                    <strong id="error-msg"></strong>
                     <div className="input-container">
                         <span><i className="far fa-envelope" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
                         <input type="text" onChange={() => {
@@ -104,14 +104,14 @@ export default class Signup extends Component {
                 console.log(responseJson);
                 if (responseJson.exists) {
 
-                    this.setState({ error: responseJson.msg });
+                    document.getElementById('error-msg').innerText = responseJson.msg;
                 } else if (!responseJson.valid) {
 
-                    this.setState({ error: responseJson.msg });
-                } else if (responseJson.result) {
+                    document.getElementById('error-msg').innerText = responseJson.msg;
+                } else {
 
-                    // document.getElementById("error-msg").innerHTML = "<p>account created succesfully</p> <a href=" / ">click here</a> <p>to login</p>"
-                    this.setState({ success: "Acoount created succesfully" });
+                    document.getElementById("error-msg").style.color = "#043927";
+                    document.getElementById('error-msg').innerText = responseJson.msg;
                 }
             })
 
