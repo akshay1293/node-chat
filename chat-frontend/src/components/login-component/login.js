@@ -103,7 +103,7 @@ class Login extends Component {
                         <a href="/signup">Sign up</a>
                     </div>
                     <div>
-                        <a href="#" onClick={this.forgotPasswordClick.bind(this)}>Forgot Password?</a>
+                        <a href="/forgotpassword">Forgot Password?</a>
                     </div>
                 </div>
             </div>
@@ -165,11 +165,6 @@ class Login extends Component {
             alert("Please enter your password");
         }
 
-    }
-
-    forgotPasswordClick() {
-
-        window.location = "http://localhost:3000/registeredemail";
     }
 }
 
