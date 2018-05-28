@@ -8,7 +8,7 @@ var config = require('../../config');
 
 class Email {
 
-    static sendTo(to, type) {
+    static sendTo(to, type, user = null) {
 
         var options = {
             auth: {
@@ -18,14 +18,19 @@ class Email {
         }
 
         var client = nodemailer.createTransport(sgTransport(options));
-        var token = jwt.sign({ email: to }, config.secret, { expiresIn: '1h' });
+        var token = jwt.sign({ email: to }, config.secret, { expiresIn: 86400 });
         var html;
+
         if (type === "reset") {
 
             html = '<p>Hi,<br><br>Looks like you requested a new password<br>If that sounds right click the below link to enter a new passsword<br><br><a href="http://localhost:3000/resetpassword?token=' + token + '">reset password</a></p><p><b>This link is valid for 1 hour only</b></p>'
         } else {
+            if (user) {
+                html = '<p>Hi,<br><br>Welcome to node chat application<br>If that sounds right click the below link to confirm your email<br><br><a href="http://localhost:3005/confirmAccount?token=' + token + '?user=' + user + '">confirm</a></p><p><b>This link is valid for 1 hour only</b></p>'
 
-            html = '<p>Hi,<br><br>Welcome to node chat application<br>If that sounds right click the below link to confirm your email<br><br><a href="http://localhost:3005/confirmAccount?token=' + token + '">confirm</a></p><p><b>This link is valid for 1 hour only</b></p>'
+            }
+
+
         }
 
         var email = {
