@@ -30,7 +30,7 @@ function create(req, res, next) {
                     }, function (err, result) {
                         console.log(err);
                         if (!err) {
-                            Email.sendTo(req.body.email, "confirm")
+                            Email.sendTo(req.body.email, "confirm", req.body.handle)
                                 .then((response) => {
 
                                     res.status(200).send({ exists: false, msg: "Email has been sent to you with the link to confirm your account" });
@@ -145,19 +145,19 @@ function forgotPassword(req, res, next) {
 
     if (!req.query) {
 
-        res.status(400).json({ success: false, msg: "email not found" });
+        res.status(400).json({ success: false, msg: "user not found" });
     } else {
 
         User.findOne({
 
-            email: req.query.email
+            handle: req.query.user
         }, function (err, user) {
 
             if (err) {
                 console.log(err);
             }
             if (user !== null) {
-                var email = req.query.email;
+                var email = user.email;
                 Email.sendTo(email, "reset")
                     .then((response) => {
 
@@ -166,11 +166,11 @@ function forgotPassword(req, res, next) {
                     .catch((err) => {
 
                         console.log(err);
-                        res.json({ success: false, msg: "email you provided seems wrong " })
+                        res.json({ success: false, msg: "User not registered with us, try signUp insted " })
                     })
             } else {
 
-                res.json({ success: false, msg: "Email not registered with us, try signUp insted " });
+                res.json({ success: false, msg: "User not registered with us, try signUp insted " });
 
             }
 
@@ -243,7 +243,7 @@ function verifyToken(token) {
 
         jwt.verify(token, config.secret, function (err, decoded) {
             if (err)
-                reject(error);
+                reject(err);
 
             resolve(decoded);
         });
@@ -328,10 +328,13 @@ function confirmAccount(req, res, next) {
     }
     verifyToken(token)
         .then((decoded) => {
-
-            res.redirect("localhost:3000/");
+            console.log(decoded);
+            res.statusCode = 302;
+            res.setHeader("Location", "http://localhost:3000/");
+            res.end();
         })
         .catch((err) => {
+            console.log(err);
             return res.send("unauthorized access");
 
         })
