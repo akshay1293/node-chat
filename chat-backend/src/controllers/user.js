@@ -152,13 +152,13 @@ function forgotPassword(req, res, next) {
 
             handle: req.query.user
         }, function (err, user) {
-
+            console.log(user);
             if (err) {
                 console.log(err);
             }
             if (user !== null) {
                 var email = user.email;
-                Email.sendTo(email, "reset")
+                Email.sendTo(email, "reset", user.handle)
                     .then((response) => {
 
                         res.status(200).send({ success: true, msg: "Instructions to reset your password has been sent to you via mail" });
@@ -189,10 +189,10 @@ function resetPassword(req, res, next) {
         res.status(400).json({ success: false, msg: "can't update password" });
     } else {
 
-        let email = req.body.email;
+        let user = req.body.user;
 
-        let query = { email: email };
-        console.log(email);
+        let query = { handle: user };
+        console.log(user);
 
         User.findOne(query, function (err, doc) {
 
@@ -317,6 +317,29 @@ function toggleOnlineStatus(user, status) {
 
 }
 
+function activateAccount(user) {
+
+    let query = { handle: user };
+
+    return new Promise(function (resolve, reject) {
+
+        User.update(query, { active: true }, function (err, res) {
+
+            if (err) {
+
+                reject(err);
+            } else {
+
+                resolve(res);
+
+                // console.log(res);
+            }
+        })
+
+    })
+
+}
+
 function confirmAccount(req, res, next) {
 
     var token = req.query.token;
@@ -328,10 +351,21 @@ function confirmAccount(req, res, next) {
     }
     verifyToken(token)
         .then((decoded) => {
-            console.log(decoded);
-            res.statusCode = 302;
-            res.setHeader("Location", "http://localhost:3000/");
-            res.end();
+
+
+            activateAccount(req.query.user)
+                .then((result) => {
+                    console.log(decoded);
+                    res.statusCode = 302;
+                    res.setHeader("Location", "http://localhost:3000/");
+                    res.end();
+
+                })
+                .catch((err) => {
+
+
+                    return res.send("Not able to verify account please try again later.");
+                })
         })
         .catch((err) => {
             console.log(err);
