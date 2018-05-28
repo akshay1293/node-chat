@@ -103,7 +103,7 @@ class Login extends Component {
                         <a href="/signup">Sign up</a>
                     </div>
                     <div>
-                        <a href="/forgotpassword">Forgot Password?</a>
+                        <a href="/inputUsername">Forgot Password?</a>
                     </div>
                 </div>
             </div>
