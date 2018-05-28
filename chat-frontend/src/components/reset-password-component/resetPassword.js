@@ -17,13 +17,18 @@ export default class ResetPassword extends Component {
             email: null,
             password: null,
             confirmPassword: null,
+            user: null,
         }
         this.config = new Config();
     }
 
     componentDidMount() {
+        console.log(this.props.location);
 
-        var token = this.props.location.search.split('=')[1];
+        var Temptoken = this.props.location.search.split('&')[0];
+        var token = Temptoken.split('=')[1];
+
+        console.log(token);
 
         if (token) {
 
@@ -45,7 +50,8 @@ export default class ResetPassword extends Component {
                         this.setState({
 
                             isValidToken: true,
-                            email: responsejson.decoded.email
+                            email: responsejson.decoded.email,
+                            user: responsejson.decoded.user
                         })
                     } else {
 
@@ -143,6 +149,7 @@ export default class ResetPassword extends Component {
                     email: this.state.email,
                     password: this.state.password,
                     confirmPassword: this.state.confirmPassword,
+                    user: this.state.user
                 }),
 
             })
