@@ -62,7 +62,7 @@ class Home extends Component {
 
                     if (!responsejson.auth) {
 
-                        window.location = "http://localhost:3000/";
+                        window.location = this.config.baseUrl;
                     } else {
                         // console.log(responsejson.decoded.user);
                         this.props.setUser(responsejson.decoded.user);
@@ -95,7 +95,7 @@ class Home extends Component {
                 })
         } else {
 
-            window.location = "http://localhost:3000/";
+            window.location = this.config.baseUrl;
         }
     }
 
