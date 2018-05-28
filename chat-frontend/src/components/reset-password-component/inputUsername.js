@@ -4,7 +4,7 @@ import "../../stylesheet/styles.css";
 import Config from '../../config';
 import loader from '../../gif/ajax-loading.gif'
 
-export default class InputEmail extends Component {
+export default class InputUsername extends Component {
 
     constructor(props) {
 
@@ -12,7 +12,7 @@ export default class InputEmail extends Component {
 
         this.state = {
 
-            email: null,
+            username: null,
         }
         this.config = new Config();
     }
@@ -24,16 +24,16 @@ export default class InputEmail extends Component {
             <div className="login-container">
                 <img id="loader" src={loader} className="loader" />
                 <div id="login-area" className="login-area">
-                    <div className="login-head-container"><p className="login-head">Enter Registered Email</p></div>
+                    <div className="login-head-container"><p className="login-head">Enter Username</p></div>
                     <strong id="error-msg"></strong>
                     <div className="input-container">
-                        <span><i className="fas fa-envelope" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
-                        <input type="email" className="input-box" id="registered-email" placeholder="Email"
+                        <span><i className="far fa-user-circle" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
+                        <input type="text" className="input-box" id="username" placeholder="username"
 
                             onChange={(e) => {
                                 this.setState(
                                     {
-                                        email: e.target.value,
+                                        username: e.target.value,
                                     })
 
                             }}
@@ -58,11 +58,11 @@ export default class InputEmail extends Component {
 
     sendPasswordResetMail() {
 
-        if (this.state.email) {
+        if (this.state.username) {
 
             document.getElementById('loader').style.display = "block";
 
-            fetch(this.config.getUrl('forgotPassword') + "?email=" + this.state.email, {
+            fetch(this.config.getUrl('forgotPassword') + "?user=" + this.state.username, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ export default class InputEmail extends Component {
                 })
         } else {
 
-            alert("please provide email");
+            alert("please provide username");
         }
 
     }
