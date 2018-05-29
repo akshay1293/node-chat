@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import "../../stylesheet/styles.css";
 import Config from '../../config';
+import loader from '../../gif/ajax-loading.gif'
+
 
 export default class Signup extends Component {
 
@@ -31,7 +33,8 @@ export default class Signup extends Component {
         return (
 
             <div className="login-container">
-                <div className="login-area">
+                <img id="loader" src={loader} className="loader" />
+                <div id="login-area" className="login-area">
                     <div className="login-head-container"><p className="login-head">Create New Account</p></div>
                     <strong id="error-msg"></strong>
                     <div className="input-container">
@@ -101,7 +104,7 @@ export default class Signup extends Component {
         })
             .then((response) => { return response.json(); })
             .then((responseJson) => {
-                document.getElementById('loader').style.display = 'block';
+                document.getElementById('loader').style.display = 'none';
                 document.getElementById('login-area').style.filter = "blur(0px)";
                 console.log(responseJson);
                 if (responseJson.exists) {
@@ -114,6 +117,7 @@ export default class Signup extends Component {
 
                     document.getElementById("error-msg").style.color = "#043927";
                     document.getElementById('error-msg').innerText = responseJson.msg;
+                    this.clearInputs();
                 }
             })
             .catch((err) => {
@@ -126,6 +130,24 @@ export default class Signup extends Component {
 
 
 
+    }
+
+    clearInputs() {
+
+        this.setState({
+
+            email: null,
+            handle: null,
+            password: null,
+            confirmPassword: null,
+        }, () => {
+
+            document.getElementById("username").value = null;
+            document.getElementById("email").value = null;
+            document.getElementById("password").value = null;
+            document.getElementById("confirmPassword").value = null;
+            document.getElementById("error-msg").innerText = null;
+        })
     }
 
     validateFields() {
