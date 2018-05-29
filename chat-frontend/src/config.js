@@ -1,6 +1,7 @@
 export default class Config {
 
-    baseUrl = "http://172.18.3.99:3000/";
+    // baseUrl = "http://chat-frontend.s3-website.ap-south-1.amazonaws.com";
+    baseUrl = "http://localhost:3000";
     getUrl(endpoint = '') {
 
         if (endpoint) {
