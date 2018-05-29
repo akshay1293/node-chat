@@ -18,8 +18,10 @@ class Header extends Component {
 
         }
     }
-    render() {
 
+    
+    render() {
+        console.log(this.state.displayMenu);
         let menuContainer = {
 
             display: this.state.displayMenu ? "flex" : "none",
@@ -35,7 +37,7 @@ class Header extends Component {
         }
         return (
 
-            <div className="top">
+            <div className="top" id='top'>
                 <div style={menuContainer}>
 
                     {this.renderOptions()}
@@ -44,7 +46,11 @@ class Header extends Component {
 
                 <div className="top-left">
 
-                    <div><p style={{ fontSize: 16 }}>{this.props.position === "left" ? this.props.userRed.handle : this.props.chatRed.connection ? this.props.chatRed.connection.to : ""}</p></div>
+                    <div style={{ display: 'flex', flexDirection: "row" }}>
+                        <p style={{ fontSize: 16 }}>{this.props.position === "left" ? this.props.userRed.handle : this.props.chatRed.connection ? this.props.chatRed.connection.to : ""}</p>
+                        {this.props.position === 'right' ? <span style={{ marginLeft: "10px", color: "lightgray" }}><i id="typing"></i></span> : ''}
+
+                    </div>
 
                 </div>
                 <div className="top-right">
@@ -73,12 +79,19 @@ class Header extends Component {
         } else {
 
             return <ul className="menu-list">
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Requests</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#" onClick={this.signOut.bind(this)}>Sign out</a></li>
+                <li><a onClick={this.menuClickHandler.bind(this, "profile")}>Profile</a></li>
+                <li><a onClick={this.menuClickHandler.bind(this, "settings")}>Settings</a></li>
+                <li><a onClick={this.signOut.bind(this)}>Sign out</a></li>
             </ul>;
         }
+    }
+
+    menuClickHandler(content) {
+        this.setState({
+
+            displayMenu: false,
+        }, () => this.props.togglePopUp(content))
+
     }
 
     signOut() {
@@ -100,7 +113,7 @@ class Header extends Component {
                     localStorage.removeItem("connection");
                     console.log(this.props.socket);
                     this.props.socket.emit("bye", { from: this.props.userRed.handle, to: this.props.chatRed.connection.to })
-                    window.location = "http://172.18.3.99:3000/";
+                    window.location = this.config.baseUrl;
 
                 } else {
 
