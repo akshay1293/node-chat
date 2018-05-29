@@ -18,7 +18,7 @@ class Email {
         }
 
         var client = nodemailer.createTransport(sgTransport(options));
-        var token = jwt.sign({ email: to, user: user }, config.secret, { expiresIn: 86400 });
+        var token = jwt.sign({ user: { email: to, handle: user } }, config.secret, { expiresIn: 86400 });
         var html;
         var subject;
 
@@ -27,7 +27,7 @@ class Email {
             html = '<p>Hi,<br><br>Looks like you requested a new password<br>If that sounds right click the below link to enter a new passsword<br><br><a href="http://localhost:3000/resetpassword?token=' + token + '&user=' + user + '">reset password</a></p><p><b>This link is valid for 1 hour only</b></p>'
         } else {
             subject = "Account Confirmation";
-            html = '<p>Hi,<br><br>Welcome to node chat application<br>click the below link to confirm your email<br><br><a href="http://localhost:3005/confirmAccount?token=' + token + '&user=' + user + '">confirm</a></p><p><b>This link is valid for 1 hour only</b></p>'
+            html = '<p>Hi,<br><br>Welcome to node chat application<br>click the below link to confirm your email<br><br><a href="http://http://172.18.3.99:3005/confirmAccount?token=' + token + '&user=' + user + '">confirm</a></p><p><b>This link is valid for 1 hour only</b></p>'
 
 
 
