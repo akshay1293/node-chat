@@ -84,7 +84,8 @@ export default class Signup extends Component {
 
     signup() {
 
-
+        document.getElementById('loader').style.display = 'block';
+        document.getElementById('login-area').style.filter = "blur(3px)";
         fetch(this.config.getUrl("create"), {
 
             method: "POST",
@@ -100,7 +101,8 @@ export default class Signup extends Component {
         })
             .then((response) => { return response.json(); })
             .then((responseJson) => {
-
+                document.getElementById('loader').style.display = 'block';
+                document.getElementById('login-area').style.filter = "blur(0px)";
                 console.log(responseJson);
                 if (responseJson.exists) {
 
@@ -113,6 +115,12 @@ export default class Signup extends Component {
                     document.getElementById("error-msg").style.color = "#043927";
                     document.getElementById('error-msg').innerText = responseJson.msg;
                 }
+            })
+            .catch((err) => {
+
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('login-area').style.filter = "blur(0px)";
+                alert("something is wrong please try again later" + err);
             })
 
 
