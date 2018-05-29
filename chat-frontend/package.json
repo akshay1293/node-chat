@@ -18,6 +18,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-and-deploy": "npm run build && s3cmd sync ~/Desktop/node-chat/chat-frontend/build/* s3://chat-frontend && echo 'your app is up and running!!!'"
   }
 }
