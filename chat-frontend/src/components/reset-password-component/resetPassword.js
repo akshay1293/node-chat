@@ -20,13 +20,14 @@ export default class ResetPassword extends Component {
             user: null,
         }
         this.config = new Config();
+        this.cookie = new Cookies();
     }
 
     componentDidMount() {
         console.log(this.props.location);
 
         var Temptoken = this.props.location.search.split('&')[0];
-        var token = Temptoken.split('=')[1];
+        var token = Temptoken.split('=')[1] || this.cookie.get("chat_token");
 
         console.log(token);
 
@@ -50,8 +51,8 @@ export default class ResetPassword extends Component {
                         this.setState({
 
                             isValidToken: true,
-                            email: responsejson.decoded.email,
-                            user: responsejson.decoded.user
+                            email: responsejson.decoded.user.email,
+                            user: responsejson.decoded.user.handle
                         })
                     } else {
 
@@ -78,6 +79,7 @@ export default class ResetPassword extends Component {
     }
 
     render() {
+        console.log(this.state);
 
         if (!this.state.isValidToken) {
 
@@ -123,13 +125,12 @@ export default class ResetPassword extends Component {
 
 
                     </div>
-                    <div className="login-foot">
+                    {this.cookie.get('chat_token') ? "" : <div className="login-foot">
                         <div className="footer-signup">
                             <p>Click to</p>
                             <a href="/">Login</a>
-
                         </div>
-                    </div>
+                    </div>}
                 </div>
             );
         }
@@ -139,6 +140,7 @@ export default class ResetPassword extends Component {
 
         if (this.state.password && this.state.confirmPassword) {
             document.getElementById('loader').style.display = "block";
+            document.getElementById('login-area').style.filter = "blur(3px)";
             fetch(this.config.getUrl('resetPassword'), {
                 method: 'PUT',
                 headers: {
@@ -155,6 +157,7 @@ export default class ResetPassword extends Component {
             })
                 .then((response) => {
                     console.log(response);
+                    document.getElementById('login-area').style.filter = "blur(0px)";
                     return response.json();
                 })
                 .then((responseJson) => {
@@ -168,6 +171,12 @@ export default class ResetPassword extends Component {
 
                         document.getElementById("error-msg").innerText = responseJson.msg;
                     }
+                })
+                .catch((err) => {
+
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('login-area').style.filter = "blur(0px)";
+                    alert("something is wrong please try again later" + err);
                 })
 
         } else {

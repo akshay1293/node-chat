@@ -4,6 +4,7 @@ import Cookies from 'universal-cookie';
 import Header from '../header-component/header';
 import ChatDisplay from '../chatDisplay-component/chatDisplay';
 import SendMeessage from '../send-message-component/sendMessage';
+import PopUpQuestion from '../popUpQuestion';
 import Users from '../users-component/users';
 import io from "socket.io-client";
 import { connect } from 'react-redux';
@@ -33,6 +34,8 @@ class Home extends Component {
         this.state = {
 
             searchText: null,
+            popupVisible: false,
+            popupContent: null
 
         }
 
@@ -111,13 +114,17 @@ class Home extends Component {
     }
 
     render() {
-
+        console.log(this.state.popupVisible);
         return (
 
             <div className="main-container">
-
+                <PopUpQuestion
+                    visible={this.state.popupVisible}
+                    togglePopUp={this.togglePopUp.bind(this)}
+                    contentType={this.state.popupContent}
+                />
                 <div id="alert-container">
-                    <p className="alert-text" id="alert-text">This is an alert this is and slet</p>
+                    <p className="alert-text" id="alert-text"></p>
                     <span className="close-alert" onClick={() => {
 
                         document.getElementById("alert-container").style.display = "none";
@@ -128,7 +135,7 @@ class Home extends Component {
                 </div>
                 <div className="left-panel">
                     <div className="header-container">
-                        <Header position={"left"} socket={socket} />
+                        <Header position={"left"} togglePopUp={this.togglePopUp.bind(this)} socket={socket} />
                     </div>
                     <Users socket={socket} />
                 </div>
@@ -162,6 +169,15 @@ class Home extends Component {
                 </div>
             </div>
         }
+    }
+
+    togglePopUp(popupContent = null) {
+
+        this.setState({
+
+            popupVisible: !this.state.popupVisible,
+            popupContent: popupContent
+        })
     }
 
 }
