@@ -93,6 +93,11 @@ class Users extends Component {
                 let userArray = responseJson;
                 this.setState({ userArray });
             })
+            .catch((err) => {
+
+                window.location = this.config.baseUrl;
+
+            })
 
     }
 
