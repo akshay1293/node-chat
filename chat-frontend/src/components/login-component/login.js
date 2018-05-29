@@ -60,17 +60,17 @@ class Login extends Component {
                     <strong id="error-msg"></strong>
                     <div className="input-container">
                         <span><i className="far fa-user-circle" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
-                        <input type="text" className="input-box" id="handle" placeholder="Username"
+                        <input type="text" className="input-box" id="username" placeholder="Username"
 
-                            onChange={() => {
+                            onChange={(e) => {
                                 this.setState(
                                     {
-                                        username: document.getElementById('handle').value,
+                                        username: e.target.value,
                                     })
                             }}
 
                         />
-                        <span id="error-user"><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
+                        <span id="error-user" onClick={this.clearInputs.bind(this, "username")}><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
                     </div>
                     <div className="input-container">
                         <span><i className="fas fa-key" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
@@ -84,15 +84,15 @@ class Login extends Component {
                                 }
                             }}
 
-                            onChange={() => {
+                            onChange={(e) => {
                                 this.setState(
                                     {
-                                        password: document.getElementById('password').value,
+                                        password: e.target.value,
                                     })
                             }}
 
                         />
-                        <span id="error-pass"><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
+                        <span id="error-pass" onClick={this.clearInputs.bind(this, "password")}><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
                     </div>
 
                     <button onClick={this.login.bind(this)} className="login-button" style={{ width: "100%" }}>LOG IN</button>
@@ -110,6 +110,11 @@ class Login extends Component {
         );
     }
 
+    clearInputs(input) {
+
+        document.getElementById(input).value = null
+        input === "username" ? this.setState({ username: null }) : this.setState({ password: null });
+    }
     login() {
 
         if (this.state.username && this.state.password) {
@@ -146,7 +151,7 @@ class Login extends Component {
                         document.getElementById('error-user').style.display = "inline";
                         document.getElementById('error-msg').innerText = responseJson.msg;
                         document.getElementById('error-pass').style.display = "inline";
-                        document.getElementById('handle').style.borderBottom = "1px solid #E73A4C";
+                        document.getElementById('username').style.borderBottom = "1px solid #E73A4C";
                         document.getElementById('password').style.borderBottom = "1px solid #E73A4C";
                     }
                 })
