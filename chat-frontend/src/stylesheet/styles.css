@@ -604,4 +604,13 @@ textarea:focus, input:focus{
     text-decoration: none;
 }
 
+#error-user:hover{
+
+    cursor: pointer;
+}
+#error-pass:hover{
+
+    cursor: pointer;
+}
+
 
