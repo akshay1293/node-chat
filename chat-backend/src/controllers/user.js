@@ -1,6 +1,6 @@
 var User = require('../models/users');
 var jwt = require('jsonwebtoken');
-var config = require('../../config');
+var config = require('config');
 var nodemailer = require('nodemailer');
 var sgTransport = require('nodemailer-sendgrid-transport');
 var Email = require('./email');
@@ -357,7 +357,7 @@ function confirmAccount(req, res, next) {
                 .then((result) => {
                     console.log(decoded);
                     res.statusCode = 302;
-                    res.setHeader("Location", "http://localhost:3000/");
+                    res.setHeader("Location", config.get('client'));
                     res.end();
 
                 })
