@@ -6,14 +6,15 @@ var cors = require("cors");
 var mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const routes = require('./src/routes/users');
-var config = require('./config');
+// var config = require('./config');
+var config = require('config');
 
 
 
 
 app.use(cors());
 
-mongoose.connect(config.db);
+mongoose.connect(config.get('db'));
 mongoose.connection.on('error', (err) => {
     throw new Error("unable to connect to database");
 });
@@ -51,9 +52,12 @@ io.on('connection', function (socket) {
 
         io.sockets.emit('signedOut', { msg: "is now offline", from: data.from });
     })
+
+
 });
 
-server.listen(config.port, function () {
+server.listen(config.get('port'), function () {
 
-    console.log("server is running...");
+    console.log("server is running on port : " + config.get('port'));
+    console.log(config.get('client'));
 });
