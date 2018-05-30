@@ -113,6 +113,7 @@ export default class Signup extends Component {
                 } else if (!responseJson.valid) {
 
                     document.getElementById('error-msg').innerText = responseJson.msg;
+                    this.clearInputs();
                 } else {
 
                     document.getElementById("error-msg").style.color = "#043927";
@@ -146,7 +147,6 @@ export default class Signup extends Component {
             document.getElementById("email").value = null;
             document.getElementById("password").value = null;
             document.getElementById("confirmPassword").value = null;
-            document.getElementById("error-msg").innerText = null;
         })
     }
 
