@@ -70,7 +70,7 @@ class Login extends Component {
                             }}
 
                         />
-                        <span id="error-user" onClick={this.clearInputs.bind(this, "username")}><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
+                        <span id="error-user" onClick={this.clearInputs.bind(this, "username")}><i className="fas fa-times" style={{ fontSize: 18, color: "rgb(124,10,2)", marginRight: "5px" }}></i></span>
                     </div>
                     <div className="input-container">
                         <span><i className="fas fa-key" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
@@ -92,7 +92,7 @@ class Login extends Component {
                             }}
 
                         />
-                        <span id="error-pass" onClick={this.clearInputs.bind(this, "password")}><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
+                        <span id="error-pass" onClick={this.clearInputs.bind(this, "password")}><i className="fas fa-times" style={{ fontSize: 18, color: "rgb(124,10,2)", marginRight: "5px" }}></i></span>
                     </div>
 
                     <button onClick={this.login.bind(this)} className="login-button" style={{ width: "100%" }}>LOG IN</button>
@@ -151,8 +151,8 @@ class Login extends Component {
                         document.getElementById('error-user').style.display = "inline";
                         document.getElementById('error-msg').innerText = responseJson.msg;
                         document.getElementById('error-pass').style.display = "inline";
-                        document.getElementById('username').style.borderBottom = "1px solid #E73A4C";
-                        document.getElementById('password').style.borderBottom = "1px solid #E73A4C";
+                        document.getElementById('username').style.borderBottom = "1px solid rgb(124,10,2)";
+                        document.getElementById('password').style.borderBottom = "1px solid rgb(124,10,2)";
                     }
                 })
                 .catch((error) => {
