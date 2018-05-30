@@ -19,7 +19,22 @@ class Header extends Component {
         }
     }
 
-    
+    componentDidMount() {
+
+        const { socket } = this.props;
+
+        socket.on("userTyping", function (data) {
+            console.log("typing...")
+            document.getElementById('typing').innerText = "typing...";
+
+        })
+        socket.on("userStoppedTyping", function (data) {
+            console.log('stopped');
+            document.getElementById('typing').innerText = "";
+
+        })
+    }
+
     render() {
         console.log(this.state.displayMenu);
         let menuContainer = {
