@@ -1,15 +1,15 @@
 export default class Config {
 
-    // baseUrl = "http://chat-frontend.s3-website.ap-south-1.amazonaws.com";
-    baseUrl = "http://localhost:3000";
+    baseUrl = "http://chat-frontend.s3-website.ap-south-1.amazonaws.com";
+    // baseUrl = "http://localhost:3000";
     getUrl(endpoint = '') {
 
         if (endpoint) {
-            return "http://172.18.3.99:3005/" + endpoint;
+            return "https://rocky-tor-68043.herokuapp.com/" + endpoint;
 
         } else {
 
-            return "http://172.18.3.99:3005";
+            return "https://rocky-tor-68043.herokuapp.com";
         }
     }
 }
