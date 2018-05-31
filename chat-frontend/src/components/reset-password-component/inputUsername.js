@@ -61,7 +61,7 @@ export default class InputUsername extends Component {
         if (this.state.username) {
 
             document.getElementById('loader').style.display = "block";
-
+            document.getElementById('login-area').style.filter = "blur(3px)";
             fetch(this.config.getUrl('forgotPassword') + "?user=" + this.state.username, {
                 method: 'GET',
                 headers: {
@@ -76,6 +76,7 @@ export default class InputUsername extends Component {
 
                     console.log(responseJson);
                     document.getElementById('loader').style.display = "none";
+                    document.getElementById('login-area').style.filter = "blur(0px)";
                     if (!responseJson.success) {
 
                         document.getElementById('error-msg').innerText = responseJson.msg;
