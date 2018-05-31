@@ -573,7 +573,7 @@ textarea:focus, input:focus{
     position: absolute;
     display:block;
     top:40vh;
-    left:50vw;
+    left:45vw;
     height:120px;
     width:120px;
     z-index:10;
@@ -598,13 +598,14 @@ textarea:focus, input:focus{
 
 .popup-container{
 
-    
+   
     position: absolute;
     align-items: center;
     justify-content: center;
     height:100vh;
     width:100vw;
     z-index:5;
+   
     /* min-height: 675px; */
     background:rgba(0,0,0,0.4);
 }
