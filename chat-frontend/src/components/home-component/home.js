@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { setUser, setConnection, createConversation } from '../../redux/actions';
 import Config from '../../config';
 import Info from '../info-component/info';
-
+import loader from '../../gif/ajax-loading.gif'
 
 
 var connectionOptions = {
@@ -35,7 +35,8 @@ class Home extends Component {
 
             searchText: null,
             popupVisible: false,
-            popupContent: null
+            popupContent: null,
+            isVerified: false,
 
         }
 
@@ -46,7 +47,7 @@ class Home extends Component {
 
     }
 
-    componentDidMount() {
+    componentWillMount() {
 
         var token = this.cookie.get("chat_token")
         if (token) {
@@ -62,12 +63,13 @@ class Home extends Component {
             })
                 .then((response) => { return response.json() })
                 .then((responsejson) => {
-
+                    console.log("componentWillMount");
                     if (!responsejson.auth) {
 
                         window.location = this.config.baseUrl;
                     } else {
                         // console.log(responsejson.decoded.user);
+                        this.setState({ isVerified: true });
                         this.props.setUser(responsejson.decoded.user);
                         let connection = JSON.parse(localStorage.getItem("connection"));
                         if (connection) {
@@ -114,36 +116,45 @@ class Home extends Component {
     }
 
     render() {
-        console.log(this.state.popupVisible);
-        return (
+        console.log("render");
 
-            <div className="main-container">
-                <PopUpQuestion
-                    visible={this.state.popupVisible}
-                    togglePopUp={this.togglePopUp.bind(this)}
-                    contentType={this.state.popupContent}
-                />
-                <div id="alert-container">
-                    <p className="alert-text" id="alert-text"></p>
-                    <span className="close-alert" onClick={() => {
+        if (!this.state.isVerified) {
 
-                        document.getElementById("alert-container").style.display = "none";
-                    }}
-                    >
-                        <i class="fas fa-times" style={{ fontSize: 14, color: "tomato", marginLeft: 10 }}></i></span>
+            return <img id="loader" src={loader} className="loader-visible" />
+        } else {
 
-                </div>
-                <div className="left-panel">
-                    <div className="header-container">
-                        <Header position={"left"} togglePopUp={this.togglePopUp.bind(this)} socket={socket} />
+            return (
+
+                <div className="main-container">
+
+                    <PopUpQuestion
+                        visible={this.state.popupVisible}
+                        togglePopUp={this.togglePopUp.bind(this)}
+                        contentType={this.state.popupContent}
+                    />
+                    <div id="alert-container">
+                        <p className="alert-text" id="alert-text"></p>
+                        <span className="close-alert" onClick={() => {
+
+                            document.getElementById("alert-container").style.display = "none";
+                        }}
+                        >
+                            <i class="fas fa-times" style={{ fontSize: 14, color: "tomato", marginLeft: 10 }}></i></span>
+
                     </div>
-                    <Users socket={socket} />
+                    <div className="left-panel">
+                        <div className="header-container">
+                            <Header position={"left"} togglePopUp={this.togglePopUp.bind(this)} socket={socket} />
+                        </div>
+                        <Users socket={socket} />
+                    </div>
+
+                    {this.renderChatOrInfo()}
+
                 </div>
+            );
+        }
 
-                {this.renderChatOrInfo()}
-
-            </div>
-        );
     }
 
     renderChatOrInfo() {
