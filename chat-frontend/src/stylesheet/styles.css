@@ -568,6 +568,17 @@ textarea:focus, input:focus{
     z-index:10;
 }
 
+.loader-visible{
+
+    position: absolute;
+    display:block;
+    top:40vh;
+    left:50vw;
+    height:120px;
+    width:120px;
+    z-index:10;
+}
+
 .popup-main{
 
     position: absolute;
