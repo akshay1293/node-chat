@@ -23,33 +23,35 @@ export default class InputUsername extends Component {
 
             <div className="login-container">
                 <img id="loader" src={loader} className="loader" />
-                <div id="login-area" className="login-area">
-                    <div className="login-head-container"><p className="login-head">Enter Username</p></div>
-                    <strong id="error-msg"></strong>
-                    <div className="input-container">
-                        <span><i className="far fa-user-circle" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
-                        <input type="text" className="input-box" id="username" placeholder="username"
+                <div className="login-area-container" id="login-area-container">
+                    <div id="login-area" className="login-area">
+                        <div className="login-head-container"><p className="login-head">Enter Username</p></div>
+                        <strong id="error-msg"></strong>
+                        <div className="input-container">
+                            <span><i className="far fa-user-circle" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
+                            <input type="text" className="input-box" id="username" placeholder="username"
 
-                            onChange={(e) => {
-                                this.setState(
-                                    {
-                                        username: e.target.value,
-                                    })
+                                onChange={(e) => {
+                                    this.setState(
+                                        {
+                                            username: e.target.value,
+                                        })
 
-                            }}
+                                }}
 
 
-                        />
-                        <span id="error-user"><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
+                            />
+                            <span id="error-user"><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
+                        </div>
+                        <button className="login-button" onClick={this.sendPasswordResetMail.bind(this)} style={{ width: "100%" }}>SUBMIT</button>
+
+
                     </div>
-                    <button className="login-button" onClick={this.sendPasswordResetMail.bind(this)} style={{ width: "100%" }}>SUBMIT</button>
-
-
-                </div>
-                <div className="login-foot">
-                    <div className="footer-signup">
-                        <p>Don't have an account?</p>
-                        <a href="/signup">Sign up</a>
+                    <div className="login-foot">
+                        <div className="footer-signup">
+                            <p>Don't have an account?</p>
+                            <a href="/signup">Sign up</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -61,7 +63,7 @@ export default class InputUsername extends Component {
         if (this.state.username) {
 
             document.getElementById('loader').style.display = "block";
-            document.getElementById('login-area').style.filter = "blur(3px)";
+            document.getElementById('login-area-container').style.filter = "blur(3px)";
             fetch(this.config.getUrl('forgotPassword') + "?user=" + this.state.username, {
                 method: 'GET',
                 headers: {
@@ -76,7 +78,7 @@ export default class InputUsername extends Component {
 
                     console.log(responseJson);
                     document.getElementById('loader').style.display = "none";
-                    document.getElementById('login-area').style.filter = "blur(0px)";
+                    document.getElementById('login-area-container').style.filter = "blur(0px)";
                     if (!responseJson.success) {
 
                         document.getElementById('error-msg').innerText = responseJson.msg;

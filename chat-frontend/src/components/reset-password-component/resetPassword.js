@@ -91,47 +91,49 @@ export default class ResetPassword extends Component {
 
                 <div className="login-container">
                     <img id="loader" src={loader} className="loader" />
-                    <div id="login-area" className="login-area">
-                        <div className="login-head-container"><p className="login-head">Please provide new password</p></div>
-                        <strong id="error-msg"></strong>
-                        <div className="input-container">
-                            <span><i className="fas fa-key" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
-                            <input type="password" className="input-box" id="new-password" placeholder="New Password"
+                    <div className="login-area-container" id="login-area-container">
+                        <div id="login-area" className="login-area">
+                            <div className="login-head-container"><p className="login-head">Please provide new password</p></div>
+                            <strong id="error-msg"></strong>
+                            <div className="input-container">
+                                <span><i className="fas fa-key" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
+                                <input type="password" className="input-box" id="new-password" placeholder="New Password"
 
-                                onChange={(e) => {
-                                    this.setState({
+                                    onChange={(e) => {
+                                        this.setState({
 
-                                        password: e.target.value
-                                    })
-                                }}
+                                            password: e.target.value
+                                        })
+                                    }}
 
-                            />
-                            <span id="error-user"><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
+                                />
+                                <span id="error-user"><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
+                            </div>
+                            <div className="input-container">
+                                <span><i className="fas fa-key" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
+                                <input type="password" className="input-box" id="confirm-new-password" placeholder="Confirm Password"
+                                    onChange={(e) => {
+                                        this.setState({
+
+                                            confirmPassword: e.target.value
+                                        })
+                                    }}
+                                />
+                                <span id="error-pass"><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
+                            </div>
+
+                            <button className="login-button" onClick={this.handleResetPassword.bind(this)} style={{ width: "100%" }}>RESET PASSWORD</button>
+
+
                         </div>
-                        <div className="input-container">
-                            <span><i className="fas fa-key" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
-                            <input type="password" className="input-box" id="confirm-new-password" placeholder="Confirm Password"
-                                onChange={(e) => {
-                                    this.setState({
-
-                                        confirmPassword: e.target.value
-                                    })
-                                }}
-                            />
-                            <span id="error-pass"><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
-                        </div>
-
-                        <button className="login-button" onClick={this.handleResetPassword.bind(this)} style={{ width: "100%" }}>RESET PASSWORD</button>
-
-
+                        {this.cookie.get('chat_token') ? "" : <div className="login-foot">
+                            <div className="footer-signup">
+                                <p>Click to</p>
+                                <a href="/">Login</a>
+                            </div>
+                        </div>}
                     </div>
-                    {this.cookie.get('chat_token') ? "" : <div className="login-foot">
-                        <div className="footer-signup">
-                            <p>Click to</p>
-                            <a href="/">Login</a>
-                        </div>
-                    </div>}
-                </div>
+                </div >
             );
         }
     }
@@ -140,7 +142,7 @@ export default class ResetPassword extends Component {
 
         if (this.state.password && this.state.confirmPassword) {
             document.getElementById('loader').style.display = "block";
-            document.getElementById('login-area').style.filter = "blur(3px)";
+            document.getElementById('login-area-container').style.filter = "blur(3px)";
             fetch(this.config.getUrl('resetPassword'), {
                 method: 'PUT',
                 headers: {
@@ -157,7 +159,7 @@ export default class ResetPassword extends Component {
             })
                 .then((response) => {
                     console.log(response);
-                    document.getElementById('login-area').style.filter = "blur(0px)";
+                    document.getElementById('login-area-container').style.filter = "blur(0px)";
                     return response.json();
                 })
                 .then((responseJson) => {
@@ -175,7 +177,7 @@ export default class ResetPassword extends Component {
                 .catch((err) => {
 
                     document.getElementById('loader').style.display = 'none';
-                    document.getElementById('login-area').style.filter = "blur(0px)";
+                    document.getElementById('login-area-container').style.filter = "blur(0px)";
                     alert("something is wrong please try again later" + err);
                 })
 
