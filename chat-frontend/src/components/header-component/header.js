@@ -23,16 +23,16 @@ class Header extends Component {
 
         const { socket } = this.props;
 
-        socket.on("userTyping", function (data) {
-            console.log("typing...")
-            document.getElementById('typing').innerText = "typing...";
+        // socket.on("userTyping", function (data) {
+        //     console.log("typing...")
+        //     document.getElementById('typing').innerText = "typing...";
 
-        })
-        socket.on("userStoppedTyping", function (data) {
-            console.log('stopped');
-            document.getElementById('typing').innerText = "";
+        // })
+        // socket.on("userStoppedTyping", function (data) {
+        //     console.log('stopped');
+        //     document.getElementById('typing').innerText = "";
 
-        })
+        // })
     }
 
     render() {
@@ -94,8 +94,8 @@ class Header extends Component {
         } else {
 
             return <ul className="menu-list">
-                <li><a onClick={this.menuClickHandler.bind(this, "profile")}>Profile</a></li>
-                <li><a onClick={this.menuClickHandler.bind(this, "settings")}>Settings</a></li>
+                <li><a onClick={this.menuClickHandler.bind(this, "Profile")}>Profile</a></li>
+                <li><a onClick={this.menuClickHandler.bind(this, "Settings")}>Settings</a></li>
                 <li><a onClick={this.signOut.bind(this)}>Sign out</a></li>
             </ul>;
         }
