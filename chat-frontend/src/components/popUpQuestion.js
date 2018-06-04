@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import "../stylesheet/styles.css";
+import { connect } from 'react-redux';
 import Config from '../config';
 import loader from '../gif/ajax-loading.gif'
 
-export default class PopUpQuestion extends Component {
+class PopUpQuestion extends Component {
 
     constructor(props) {
 
@@ -12,7 +13,7 @@ export default class PopUpQuestion extends Component {
     }
 
     render() {
-
+        console.log(this.props.userRed);
         const styles = {
 
             container: {
@@ -25,10 +26,11 @@ export default class PopUpQuestion extends Component {
             <div style={styles.container} id="popup-container" className="popup-container">
                 <div className="popup-main">
                     <div className="popup-header">
-                        <p onClick={() => { this.props.togglePopUp() }}>cancel</p>
+                        <p>{this.props.contentType}</p>
+                        <p onClick={() => { this.props.togglePopUp() }} className="popup-close"><i className="fas fa-times"></i></p>
                     </div>
-                    <div class="popup-content">
-                        <p>{this.renderContent(this.props.contentType)}</p>
+                    <div className="popup-content">
+                        {this.renderContent(this.props.contentType)}
                     </div>
                 </div >
             </div >
@@ -39,9 +41,9 @@ export default class PopUpQuestion extends Component {
 
         switch (type) {
 
-            case "profile": return (<div>profile</div>);
+            case "Profile": return this.profileContent();
                 break;
-            case "settings": return this.settingsContent();
+            case "Settings": return this.settingsContent();
                 break;
         }
 
@@ -55,4 +57,19 @@ export default class PopUpQuestion extends Component {
             </div>
         );
     }
+
+    profileContent() {
+
+        return (
+
+            <div>
+                <p><b>{this.props.userRed.handle}</b></p>
+                <p><i>{this.props.userRed.email}</i></p>
+            </div>
+        );
+    }
 }
+
+export default connect(({ userRed }) => ({ userRed }), {
+
+})(PopUpQuestion);
