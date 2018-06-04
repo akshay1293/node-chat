@@ -36,7 +36,7 @@ class Header extends Component {
     }
 
     render() {
-        console.log(this.state.displayMenu);
+        // console.log(this.state.displayMenu);
         let menuContainer = {
 
             display: this.state.displayMenu ? "flex" : "none",
@@ -126,7 +126,7 @@ class Header extends Component {
 
                     this.cookie.remove("chat_token");
                     localStorage.removeItem("connection");
-                    console.log(this.props.socket);
+                    // console.log(this.props.socket);
                     this.props.socket.emit("bye", { from: this.props.userRed.handle, to: this.props.chatRed.connection.to })
                     window.location = this.config.baseUrl;
 

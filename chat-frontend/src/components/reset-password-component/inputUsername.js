@@ -76,7 +76,7 @@ export default class InputUsername extends Component {
                 })
                 .then((responseJson) => {
 
-                    console.log(responseJson);
+                   
                     document.getElementById('loader').style.display = "none";
                     document.getElementById('login-area-container').style.filter = "blur(0px)";
                     if (!responseJson.success) {

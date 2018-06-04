@@ -63,7 +63,7 @@ class Home extends Component {
             })
                 .then((response) => { return response.json() })
                 .then((responsejson) => {
-                    console.log("componentWillMount");
+                    // console.log("componentWillMount");
                     if (!responsejson.auth) {
 
                         window.location = this.config.baseUrl;
@@ -116,7 +116,6 @@ class Home extends Component {
     }
 
     render() {
-        console.log("render");
 
         if (!this.state.isVerified) {
 

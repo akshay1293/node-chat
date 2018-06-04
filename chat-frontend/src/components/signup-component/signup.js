@@ -108,7 +108,7 @@ export default class Signup extends Component {
             .then((responseJson) => {
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('login-area-container').style.filter = "blur(0px)";
-                console.log(responseJson);
+           
                 if (responseJson.exists) {
 
                     document.getElementById('error-msg').innerText = responseJson.msg;

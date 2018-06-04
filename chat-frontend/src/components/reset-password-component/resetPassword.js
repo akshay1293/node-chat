@@ -24,12 +24,12 @@ export default class ResetPassword extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.location);
+       
 
         var Temptoken = this.props.location.search.split('&')[0];
         var token = Temptoken.split('=')[1] || this.cookie.get("chat_token");
 
-        console.log(token);
+        
 
         if (token) {
 
@@ -46,7 +46,7 @@ export default class ResetPassword extends Component {
 
                     if (responsejson.auth) {
 
-                        console.log(responsejson);
+                        
 
                         this.setState({
 
@@ -79,7 +79,7 @@ export default class ResetPassword extends Component {
     }
 
     render() {
-        console.log(this.state);
+      
 
         if (!this.state.isValidToken) {
 
@@ -158,13 +158,13 @@ export default class ResetPassword extends Component {
 
             })
                 .then((response) => {
-                    console.log(response);
+                  
                     document.getElementById('login-area-container').style.filter = "blur(0px)";
                     return response.json();
                 })
                 .then((responseJson) => {
                     document.getElementById('loader').style.display = "none";
-                    console.log(responseJson);
+                   
                     if (responseJson.success) {
                         document.getElementById("error-msg").style.color = "#043927";
                         document.getElementById("error-msg").innerText = responseJson.msg;

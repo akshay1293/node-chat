@@ -39,7 +39,7 @@ class Users extends Component {
 
 
         socket.on('msg', async function (data) {
-            console.log(data);
+           
             this.setState({ playing: true });
             await setConnection({ to: data.from, from: data.to });
             localStorage.setItem("connection", JSON.stringify({ to: data.from, from: data.to }));
@@ -50,7 +50,7 @@ class Users extends Component {
                 await createConversation(data.from);
                 // console.log((chatRed.connection.to in chatRed.messages));
             }
-            console.log(chatRed.messages);
+            
             await appendMessage(
                 {
                     to: data.from,
