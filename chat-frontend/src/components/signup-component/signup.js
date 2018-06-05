@@ -15,6 +15,7 @@ export default class Signup extends Component {
             email: null,
             handle: null,
             password: null,
+            gender: null,
             confirmPassword: null,
             error: null,
             success: null,
@@ -55,6 +56,20 @@ export default class Signup extends Component {
 
                             }} className="input-box" id="username" placeholder="Username"
                             />
+                        </div>
+                        <div className="input-container">
+                            <span><i className="fa fa-venus-mars" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
+                            <select name="gender" id="gender" className="input-box"
+                                onChange={(e) => {
+
+                                    this.setState({ gender: e.target.value });
+
+                                }}
+                            >
+                                <option value="" selected="selected">None</option>
+                                <option value="m">Male</option>
+                                <option value="f">Female</option>
+                            </select>
                         </div>
                         <div className="input-container">
                             <span><i className="fas fa-key" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
@@ -100,6 +115,7 @@ export default class Signup extends Component {
             body: JSON.stringify({
                 email: this.state.email,
                 handle: this.state.handle,
+                gender: this.state.gender,
                 password: this.state.password,
                 confirmPassword: this.state.confirmPassword,
             })
@@ -108,7 +124,7 @@ export default class Signup extends Component {
             .then((responseJson) => {
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('login-area-container').style.filter = "blur(0px)";
-           
+
                 if (responseJson.exists) {
 
                     document.getElementById('error-msg').innerText = responseJson.msg;
@@ -141,6 +157,7 @@ export default class Signup extends Component {
 
             email: null,
             handle: null,
+            gender: null,
             password: null,
             confirmPassword: null,
         }, () => {
@@ -149,6 +166,7 @@ export default class Signup extends Component {
             document.getElementById("email").value = null;
             document.getElementById("password").value = null;
             document.getElementById("confirmPassword").value = null;
+            document.getElementById("gender").selectedIndex = 0;
         })
     }
 
