@@ -142,7 +142,9 @@ class Login extends Component {
                             {
                                 id: responseJson.id,
                                 email: responseJson.email,
-                                handle: responseJson.handle
+                                handle: responseJson.handle,
+                                gender: responseJson.gender,
+                                status: responseJson.status,
                             });
                         this.props.history.push("home");
                     } else {

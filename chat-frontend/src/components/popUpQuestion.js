@@ -64,6 +64,8 @@ class PopUpQuestion extends Component {
 
             <div>
                 <p><b>{this.props.userRed.handle}</b></p>
+                <p><b>{this.props.userRed.gender}</b></p>
+                <p><b>{this.props.userRed.status ? "active" : "Inactive"}</b></p>
                 <p><i>{this.props.userRed.email}</i></p>
             </div>
         );
