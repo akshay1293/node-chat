@@ -27,9 +27,6 @@ const socket = io(config.getUrl(), connectionOptions);
 class Home extends Component {
 
     constructor(props) {
-
-
-
         super();
         this.state = {
 
@@ -51,7 +48,6 @@ class Home extends Component {
 
         var token = this.cookie.get("chat_token")
         if (token) {
-
 
             fetch(this.config.getUrl('verify'), {
 
@@ -82,8 +78,6 @@ class Home extends Component {
                                 user: this.props.userRed.handle,
 
                             });
-
-
 
                         socket.on("signedOut", function (data) {
                             if (data.from === this.props.chatRed.connection.to) {
