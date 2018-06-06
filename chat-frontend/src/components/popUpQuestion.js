@@ -39,7 +39,7 @@ class PopUpQuestion extends Component {
 
             case "Settings": return this.settingsContent();
 
-            default: return;
+            default: return "no content found";
 
         }
 
