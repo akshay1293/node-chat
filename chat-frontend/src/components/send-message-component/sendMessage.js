@@ -43,11 +43,11 @@ class SendMessage extends Component {
 
                             socket.emit('typingStarted', { from: chatRed.connection.from, to: chatRed.connection.to })
                         }}
-                        onChange={() => {
+                        onChange={(e) => {
 
                             this.setState({
 
-                                message: document.getElementById("chat-message").value,
+                                message: e.target.value,
                             })
                         }}
                     />
