@@ -113,7 +113,7 @@ class Home extends Component {
 
         if (!this.state.isVerified) {
 
-            return <img id="loader" src={loader} className="loader-visible" />
+            return <img id="loader" src={loader} className="loader-visible" alt="loading..." />
         } else {
 
             return (

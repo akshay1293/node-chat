@@ -21,7 +21,7 @@ class Header extends Component {
 
     componentDidMount() {
 
-        const { socket } = this.props;
+        // const { socket } = this.props;
 
         // socket.on("userTyping", function (data) {
         //     console.log("typing...")
@@ -86,8 +86,8 @@ class Header extends Component {
         if (this.props.position === "right") {
 
             return <ul className="menu-list">
-                <li><a href="#">Block</a></li>
-                <li><a href="#">View</a></li>
+                <li><a>Block</a></li>
+                <li><a>View</a></li>
             </ul>;
 
 

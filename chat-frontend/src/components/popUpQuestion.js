@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
-import Cookies from 'universal-cookie';
 import "../stylesheet/styles.css";
 import { connect } from 'react-redux';
-import Config from '../config';
-import loader from '../gif/ajax-loading.gif'
 import man from '../img/avatars/man.png';
 import girl from '../img/avatars/girl.png';
 
 class PopUpQuestion extends Component {
-
-    constructor(props) {
-
-        super(props);
-    }
 
     render() {
         console.log(this.props.userRed);
@@ -44,9 +36,11 @@ class PopUpQuestion extends Component {
         switch (type) {
 
             case "Profile": return this.profileContent();
-                break;
+
             case "Settings": return this.settingsContent();
-                break;
+
+            default: return;
+
         }
 
     }
@@ -65,7 +59,7 @@ class PopUpQuestion extends Component {
         return (
 
             <div>
-                <img src={this.props.userRed.gender === "m" ? man : girl} className="profile-avatar" />
+                <img src={this.props.userRed.gender === "m" ? man : girl} className="profile-avatar" alt="profile avatar" />
                 <h4><b>{this.props.userRed.handle}</b></h4>
                 <p><b>{this.props.userRed.status ? "active" : "Inactive"}</b></p>
                 <p><i>{this.props.userRed.email}</i></p>

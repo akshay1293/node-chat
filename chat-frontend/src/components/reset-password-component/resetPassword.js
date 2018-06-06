@@ -90,7 +90,7 @@ export default class ResetPassword extends Component {
             return (
 
                 <div className="login-container">
-                    <img id="loader" src={loader} className="loader" />
+                    <img id="loader" src={loader} className="loader" alt="loading..." />
                     <div className="login-area-container" id="login-area-container">
                         <div id="login-area" className="login-area">
                             <div className="login-head-container"><p className="login-head">Please provide new password</p></div>

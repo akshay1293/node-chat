@@ -72,7 +72,7 @@ export default class InputUsername extends Component {
             return (
 
                 <div className="login-container">
-                    <img id="loader" src={loader} className="loader" />
+                    <img id="loader" src={loader} className="loader" alt="loading..." />
                     <div className="login-area-container" id="login-area-container">
                         <div id="login-area" className="login-area">
                             <div className="login-head-container"><p className="login-head">Enter Username</p></div>
@@ -108,7 +108,7 @@ export default class InputUsername extends Component {
             );
         } else {
 
-            return <img id="loader" src={loader} className="loader-visible" />
+            return <img id="loader" src={loader} className="loader-visible" alt="loading..." />
         }
 
 

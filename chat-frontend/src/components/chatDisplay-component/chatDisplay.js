@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Message from '../message-component/message';
 import "../../stylesheet/styles.css";
 import { connect } from 'react-redux';

@@ -5,7 +5,7 @@ import "../../stylesheet/styles.css";
 import Config from '../../config';
 import UserList from '../userlist-component/userList';
 import { connect } from 'react-redux';
-import { appendMessage, setConnection, createConversation, userRed } from '../../redux/actions';
+import { appendMessage, setConnection, createConversation } from '../../redux/actions';
 import Sound from 'react-sound';
 import incomingMessageSound from '../../sounds/incomingMessage.mp3';
 
@@ -35,11 +35,11 @@ class Users extends Component {
     componentDidMount() {
 
 
-        const { socket, appendMessage, setConnection, chatRed, userRed, createConversation } = this.props;
+        const { socket, appendMessage, setConnection, chatRed, createConversation } = this.props;
 
 
         socket.on('msg', async function (data) {
-           
+
             this.setState({ playing: true });
             await setConnection({ to: data.from, from: data.to });
             localStorage.setItem("connection", JSON.stringify({ to: data.from, from: data.to }));
@@ -50,7 +50,7 @@ class Users extends Component {
                 await createConversation(data.from);
                 // console.log((chatRed.connection.to in chatRed.messages));
             }
-            
+
             await appendMessage(
                 {
                     to: data.from,
