@@ -4,6 +4,8 @@ import "../stylesheet/styles.css";
 import { connect } from 'react-redux';
 import Config from '../config';
 import loader from '../gif/ajax-loading.gif'
+import man from '../img/avatars/man.png';
+import girl from '../img/avatars/girl.png';
 
 class PopUpQuestion extends Component {
 
@@ -26,7 +28,7 @@ class PopUpQuestion extends Component {
             <div style={styles.container} id="popup-container" className="popup-container">
                 <div className="popup-main">
                     <div className="popup-header">
-                        <p>{this.props.contentType}</p>
+                        <p><i className="fas fa-pencil-alt" style={{ fontSize: 16 }}></i></p>
                         <p onClick={() => { this.props.togglePopUp() }} className="popup-close"><i className="fas fa-times"></i></p>
                     </div>
                     <div className="popup-content">
@@ -63,8 +65,8 @@ class PopUpQuestion extends Component {
         return (
 
             <div>
-                <p><b>{this.props.userRed.handle}</b></p>
-                <p><b>{this.props.userRed.gender}</b></p>
+                <img src={this.props.userRed.gender === "m" ? man : girl} className="profile-avatar" />
+                <h4><b>{this.props.userRed.handle}</b></h4>
                 <p><b>{this.props.userRed.status ? "active" : "Inactive"}</b></p>
                 <p><i>{this.props.userRed.email}</i></p>
             </div>

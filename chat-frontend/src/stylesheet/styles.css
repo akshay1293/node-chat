@@ -693,3 +693,10 @@ textarea:focus, input:focus{
 
     cursor: pointer;
 }
+
+.profile-avatar{
+
+    height:120px;
+    width:120px;
+    padding:10px;
+}
