@@ -594,11 +594,11 @@ textarea:focus, input:focus{
 
 .popup-main{
 
-    position: absolute;
+    position: fixed;
     display:flex;
     flex-direction: column;
-    top:40vh;
-    left:50%;
+    top:35%;
+    left:40%;
     min-height:200px;
     min-width:300px;
     padding:10px 20px;
