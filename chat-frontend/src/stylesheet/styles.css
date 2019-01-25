@@ -39,7 +39,7 @@ a:hover{
     justify-content: center;
     flex-direction: column;
     height:100vh;
-    /* min-height: 675px; */
+    min-height: 675px;
     background: #222a36;
     
     
@@ -55,7 +55,7 @@ a:hover{
     height:100vh;
     width:100%;
     
-    /* min-height: 675px; */
+    min-height: 675px;
     
 }
 
@@ -202,17 +202,15 @@ a:hover{
 .main-container{
 
     height:100vh;
-    /* min-height: 670px; */
+    min-height: 670px;
     display:flex;
     flex-direction: row;
     background: #222a36;
 }
 
 .left-panel{
-
     flex:3;
-
-    /* background: #516B63; */
+   /* background: #516B63; */
 }
 
 .chat-container,.info-container{
@@ -220,7 +218,8 @@ a:hover{
     display: flex;
     flex:7;
     flex-direction: column;
-    border-left:1px solid #394148
+    border-left:1px solid #394148;
+    min-height: 670px;
 }
 
 .info-container{
@@ -230,9 +229,6 @@ a:hover{
     align-items: center;
     color:gray;
 }
-
-
-
 .header-container{
 
     flex:1;
@@ -255,8 +251,8 @@ a:hover{
 
 .menu-list{
 
-    list-style-type: none;
-    font-weight: bold;
+   list-style-type: none;
+   font-weight: bold;
    padding:10px;
    padding-right: 30px;
    
