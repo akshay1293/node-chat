@@ -22,6 +22,8 @@ class SendMessage extends Component {
 
     render() {
 
+        const { socket, chatRed } = this.props;
+
         return (
 
             <div className="message-area">
@@ -31,17 +33,21 @@ class SendMessage extends Component {
                     <input type="text" className="input-box message" name="message" id="chat-message"
                         placeholder="Type a message"
                         onKeyUp={(e) => {
-
+                            socket.emit('typingStopped', { from: chatRed.connection.from, to: chatRed.connection.to })
                             if (e.keyCode === 13) {
 
                                 this.send();
                             }
                         }}
-                        onChange={() => {
+                        onKeyDown={() => {
+
+                            socket.emit('typingStarted', { from: chatRed.connection.from, to: chatRed.connection.to })
+                        }}
+                        onChange={(e) => {
 
                             this.setState({
 
-                                message: document.getElementById("chat-message").value,
+                                message: e.target.value,
                             })
                         }}
                     />
@@ -92,3 +98,5 @@ export default connect(({ userRed, chatRed }) => ({ userRed, chatRed }), {
     appendMessage
 
 })(SendMessage);
+
+

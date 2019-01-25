@@ -4,10 +4,12 @@ import "../../stylesheet/styles.css";
 import { connect } from 'react-redux';
 import { setUser } from '../../redux/actions';
 import Config from '../../config';
+import loader from '../../gif/ajax-loading.gif'
 
 
 
 class Login extends Component {
+
 
     constructor(props) {
 
@@ -15,11 +17,11 @@ class Login extends Component {
 
         this.cookie = new Cookies();
         this.config = new Config();
-
+        // this.date = new Date().getDate() + "-" + new Date().getMonth() + "-" + new Date().getFullYear()
         this.state = {
 
             username: null,
-            password: null
+            password: null,
         }
     }
 
@@ -52,62 +54,75 @@ class Login extends Component {
         return (
 
             <div className="login-container">
-                <div className="login-area">
-                    <div className="login-head-container"><p className="login-head">Login To Start Chatting</p></div>
-                    <strong id="error-msg"></strong>
-                    <div className="input-container">
-                        <span><i className="far fa-user-circle" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
-                        <input type="text" className="input-box" id="handle" placeholder="Username"
+                <img id="loader" src={loader} className="loader" alt="loading..." />
+                <div className="login-area-container" id="login-area-container">
+                    <div id="login-area" className="login-area">
+                        <div className="login-head-container"><p className="login-head">Login To Start Chatting</p></div>
+                        <strong id="error-msg"></strong>
+                        <div className="input-container">
+                            <span><i className="far fa-user-circle" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
+                            <input type="text" className="input-box" id="username" placeholder="Username"
 
-                            onChange={() => {
-                                this.setState(
-                                    {
-                                        username: document.getElementById('handle').value,
-                                    })
-                            }}
+                                onChange={(e) => {
+                                    this.setState(
+                                        {
+                                            username: e.target.value,
+                                        })
+                                }}
 
-                        />
-                        <span id="error-user"><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
+                            />
+                            <span id="error-user" onClick={this.clearInputs.bind(this, "username")}><i className="fas fa-times" style={{ fontSize: 18, color: "rgb(124,10,2)", marginRight: "5px" }}></i></span>
+                        </div>
+                        <div className="input-container">
+                            <span><i className="fas fa-key" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
+                            <input type="password" className="input-box" id="password" placeholder="Password"
+
+                                onKeyUp={(e) => {
+
+                                    if (e.keyCode === 13) {
+
+                                        this.login();
+                                    }
+                                }}
+
+                                onChange={(e) => {
+                                    this.setState(
+                                        {
+                                            password: e.target.value,
+                                        })
+                                }}
+
+                            />
+                            <span id="error-pass" onClick={this.clearInputs.bind(this, "password")}><i className="fas fa-times" style={{ fontSize: 18, color: "rgb(124,10,2)", marginRight: "5px" }}></i></span>
+                        </div>
+
+                        <button onClick={this.login.bind(this)} className="login-button" style={{ width: "100%" }}>LOG IN</button>
                     </div>
-                    <div className="input-container">
-                        <span><i className="fas fa-key" style={{ fontSize: 16, color: "#FFF", marginRight: "5px" }}></i></span>
-                        <input type="password" className="input-box" id="password" placeholder="Password"
-
-                            onKeyUp={(e) => {
-
-                                if (e.keyCode === 13) {
-
-                                    this.login();
-                                }
-                            }}
-
-                            onChange={() => {
-                                this.setState(
-                                    {
-                                        password: document.getElementById('password').value,
-                                    })
-                            }}
-
-                        />
-                        <span id="error-pass"><i className="fas fa-times" style={{ fontSize: 18, color: "#E73A4C", marginRight: "5px" }}></i></span>
+                    <div className="login-foot">
+                        <div className="footer-signup">
+                            <p>Don't have an account?</p>
+                            <a href="/signup">Sign up</a>
+                        </div>
+                        <div>
+                            <a href="/inputUsername">Forgot Password?</a>
+                        </div>
                     </div>
-
-                    <button onClick={this.login.bind(this)} className="login-button" style={{ width: "100%" }}>LOG IN</button>
-                    {/* <button className="login-button signup" style={{ width: "100%" }}>SIGN UP</button> */}
-
-                </div>
-                <div className="login-foot">
-                    <p>Don't have an account?</p>
-                    <a href="/signup">Sign up</a>
                 </div>
             </div>
         );
     }
 
+    clearInputs(input) {
+
+        document.getElementById(input).value = null
+        input === "username" ? this.setState({ username: null }) : this.setState({ password: null });
+    }
+
     login() {
 
         if (this.state.username && this.state.password) {
-
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('login-area-container').style.filter = "blur(3px)";
             fetch(this.config.getUrl("login"), {
 
                 method: 'POST',
@@ -128,19 +143,26 @@ class Login extends Component {
                             {
                                 id: responseJson.id,
                                 email: responseJson.email,
-                                handle: responseJson.handle
+                                handle: responseJson.handle,
+                                gender: responseJson.gender,
+                                status: responseJson.status,
                             });
                         this.props.history.push("home");
                     } else {
+                        /**show/hide loader and display login errors  */
 
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('login-area-container').style.filter = "blur(0px)"
                         document.getElementById('error-user').style.display = "inline";
                         document.getElementById('error-msg').innerText = responseJson.msg;
                         document.getElementById('error-pass').style.display = "inline";
-                        document.getElementById('handle').style.borderBottom = "1px solid #E73A4C";
-                        document.getElementById('password').style.borderBottom = "1px solid #E73A4C";
+                        document.getElementById('username').style.borderBottom = "1px solid rgb(124,10,2)";
+                        document.getElementById('password').style.borderBottom = "1px solid rgb(124,10,2)";
                     }
                 })
                 .catch((error) => {
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('login-area-container').style.filter = "blur(0px)";
                     alert("something is wrong please try again later" + error);
                 });
 

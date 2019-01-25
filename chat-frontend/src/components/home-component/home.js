@@ -4,12 +4,14 @@ import Cookies from 'universal-cookie';
 import Header from '../header-component/header';
 import ChatDisplay from '../chatDisplay-component/chatDisplay';
 import SendMeessage from '../send-message-component/sendMessage';
+import PopUpQuestion from '../popUpQuestion';
 import Users from '../users-component/users';
 import io from "socket.io-client";
 import { connect } from 'react-redux';
 import { setUser, setConnection, createConversation } from '../../redux/actions';
 import Config from '../../config';
 import Info from '../info-component/info';
+import loader from '../../gif/ajax-loading.gif'
 
 
 var connectionOptions = {
@@ -25,13 +27,13 @@ const socket = io(config.getUrl(), connectionOptions);
 class Home extends Component {
 
     constructor(props) {
-
-
-
         super();
         this.state = {
 
             searchText: null,
+            popupVisible: false,
+            popupContent: null,
+            isVerified: false,
 
         }
 
@@ -42,11 +44,10 @@ class Home extends Component {
 
     }
 
-    componentDidMount() {
+    componentWillMount() {
 
         var token = this.cookie.get("chat_token")
         if (token) {
-
 
             fetch(this.config.getUrl('verify'), {
 
@@ -58,12 +59,13 @@ class Home extends Component {
             })
                 .then((response) => { return response.json() })
                 .then((responsejson) => {
-
+                    // console.log("componentWillMount");
                     if (!responsejson.auth) {
 
-                        window.location = "http://localhost:3000/";
+                        window.location = this.config.baseUrl;
                     } else {
                         // console.log(responsejson.decoded.user);
+                        this.setState({ isVerified: true });
                         this.props.setUser(responsejson.decoded.user);
                         let connection = JSON.parse(localStorage.getItem("connection"));
                         if (connection) {
@@ -78,49 +80,74 @@ class Home extends Component {
                             });
 
                         socket.on("signedOut", function (data) {
+                            if (data.from === this.props.chatRed.connection.to) {
 
-                            document.getElementById("alert-container").style.display = "flex";
-                            document.getElementById("alert-text").innerText = data.from + " " + data.msg;
+                                this.showAlert(data.from + ' ' + data.msg);
+                            }
 
-                            setTimeout(() => {
-
-                                document.getElementById("alert-container").style.display = "none";
-                            }, 5000)
-                        })
+                        }.bind(this))
 
                     }
+                }).catch((err) => {
+
+                    this.showAlert("unable to get data");
                 })
         } else {
 
-            window.location = "http://localhost:3000/";
+            window.location = this.config.baseUrl;
         }
+    }
+
+    showAlert(alert) {
+
+        document.getElementById("alert-container").style.display = "flex";
+        document.getElementById("alert-text").innerText = alert;
+
+        setTimeout(() => {
+
+            document.getElementById("alert-container").style.display = "none";
+        }, 5000)
     }
 
     render() {
 
-        return (
+        if (!this.state.isVerified) {
 
-            <div className="main-container">
-                <div id="alert-container">
-                    <p className="alert-text" id="alert-text">This is an alert this is and slet</p>
-                    <span className="close-alert" onClick={() => {
+            return <img id="loader" src={loader} className="loader-visible" alt="loading..." />
+        } else {
 
-                        document.getElementById("alert-container").style.display = "none";
-                    }}
-                    >
-                        <i class="fas fa-times" style={{ fontSize: 14, color: "tomato", marginLeft: 10 }}></i></span>
+            return (
 
-                </div>
-                <div className="left-panel">
-                    <div className="header-container">
-                        <Header position={"left"} socket={socket} />
+                <div className="main-container">
+
+                    <PopUpQuestion
+                        visible={this.state.popupVisible}
+                        togglePopUp={this.togglePopUp.bind(this)}
+                        contentType={this.state.popupContent}
+                    />
+                    <div id="alert-container">
+                        <p className="alert-text" id="alert-text"></p>
+                        <span className="close-alert" onClick={() => {
+
+                            document.getElementById("alert-container").style.display = "none";
+                        }}
+                        >
+                            <i class="fas fa-times" style={{ fontSize: 14, color: "tomato", marginLeft: 10 }}></i></span>
+
                     </div>
-                    <Users socket={socket} />
-                </div>
+                    <div className="left-panel">
+                        <div className="header-container">
+                            <Header position={"left"} togglePopUp={this.togglePopUp.bind(this)} socket={socket} />
+                        </div>
+                        <Users socket={socket} />
+                    </div>
 
-                {this.renderChatOrInfo()}
-            </div>
-        );
+                    {this.renderChatOrInfo()}
+
+                </div>
+            );
+        }
+
     }
 
     renderChatOrInfo() {
@@ -146,6 +173,15 @@ class Home extends Component {
                 </div>
             </div>
         }
+    }
+
+    togglePopUp(popupContent = null) {
+
+        this.setState({
+
+            popupVisible: !this.state.popupVisible,
+            popupContent: popupContent
+        })
     }
 
 }

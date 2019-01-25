@@ -21,22 +21,21 @@ class UserList extends Component {
 
             online: {
 
-                color: this.props.user.online === true ? "#5EF034" : "darkgray",
+                color: this.props.user.online ? "#5EF034" : "darkgray",
             },
             active: {
 
                 background: this.props.active ? "rgba(208, 245, 207,0.4)" : "",
             },
         }
-
+        //console.log(styles.online);
         return (
 
             <div className="user-list" style={styles.active} onClick={this.props.user.online ? this.userClickHandler.bind(this) : () => alert(this.props.user.handle + " " + "is offline")}>
                 <div>
                     <p><strong>{this.props.user.handle}</strong></p>
-                    <i id={this.props.user.handle + "-" + "status"} style={{ color: "darkgray" }}>{this.props.user.online === true ? "online" : "offline"}</i>
+                    <i style={styles.online}>{this.props.user.online === true ? "online" : "offline"}</i>
                 </div>
-                <div><i className="fas fa-circle" id={this.props.user.handle} style={styles.online}></i></div>
             </div >
         );
     }

@@ -27,6 +27,11 @@ a{
     color:#FFF;
 }
 
+a:hover{
+
+    cursor: pointer;
+}
+
 .login-container{
 
     display:flex;
@@ -34,9 +39,23 @@ a{
     justify-content: center;
     flex-direction: column;
     height:100vh;
-    /* min-height: 675px; */
+    min-height: 675px;
     background: #222a36;
     
+    
+    
+}
+
+.login-area-container{
+
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height:100vh;
+    width:100%;
+    
+    min-height: 675px;
     
 }
 
@@ -46,12 +65,14 @@ a{
     border-radius:5px;
     /* padding:20px 40px; */
     min-width:350px;
+    max-width: 350px;
     display:flex;
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
     margin: 10px;
     background: #516B63;
+    
     
 }
 
@@ -86,9 +107,10 @@ a{
 .login-foot{
 
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     color:#BCBDBE;
-    border-bottom: 0.1em solid #808B96;
+    /* border-bottom: 0.1em solid #808B96; */
 }
 
 .login-foot a{
@@ -97,6 +119,12 @@ a{
     color:#40826E;
     padding:0 3px;
     font-weight: 500;
+}
+
+.footer-signup{
+
+    display:flex;
+    flex-direction:row; 
 }
 
 .login-foot p{
@@ -174,17 +202,15 @@ a{
 .main-container{
 
     height:100vh;
-    /* min-height: 670px; */
+    min-height: 670px;
     display:flex;
     flex-direction: row;
     background: #222a36;
 }
 
 .left-panel{
-
     flex:3;
-
-    /* background: #516B63; */
+   /* background: #516B63; */
 }
 
 .chat-container,.info-container{
@@ -192,7 +218,8 @@ a{
     display: flex;
     flex:7;
     flex-direction: column;
-    border-left:1px solid #394148
+    border-left:1px solid #394148;
+    min-height: 670px;
 }
 
 .info-container{
@@ -202,9 +229,6 @@ a{
     align-items: center;
     color:gray;
 }
-
-
-
 .header-container{
 
     flex:1;
@@ -227,8 +251,8 @@ a{
 
 .menu-list{
 
-    list-style-type: none;
-    font-weight: bold;
+   list-style-type: none;
+   font-weight: bold;
    padding:10px;
    padding-right: 30px;
    
@@ -249,6 +273,10 @@ a{
     text-decoration: none;  
 }
 
+.menu-list a:hover{
+
+    cursor: pointer;  
+}
 
 .top{
     display:flex;
@@ -336,7 +364,10 @@ a{
 
 #error-msg{
 
-    color:#E73A4C
+    color:rgb(124,10,2);
+    padding:7px;
+    text-align: center;
+    
 }
 
 .message-area{
@@ -536,3 +567,132 @@ textarea:focus, input:focus{
     cursor: pointer
 }
 
+.loader{
+
+    position: absolute;
+    display:none;
+    top:40vh;
+    height:100px;
+    width:100px;
+    z-index:10;
+}
+
+.loader-visible{
+
+    position: absolute;
+    display:block;
+    top:40vh;
+    left:45vw;
+    height:120px;
+    width:120px;
+    z-index:10;
+}
+
+.popup-main{
+
+    position: fixed;
+    display:flex;
+    flex-direction: column;
+    top:35%;
+    left:40%;
+    min-height:200px;
+    min-width:300px;
+    padding:10px 20px;
+    z-index:10;
+    background: rgba(255,255,255,0.9);
+    border-radius:3px;
+    box-shadow: black 2px 4px 9px;
+    
+}
+
+.popup-container{
+
+   
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    height:100vh;
+    width:100vw;
+    z-index:5;
+   
+    /* min-height: 675px; */
+    background:rgba(0,0,0,0.4);
+}
+
+.popup-header{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.popup-content{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    text-align: center;
+}
+
+.popup-content a{
+
+    color:#40826E;
+    text-decoration: none;
+}
+
+#error-user:hover{
+
+    cursor: pointer;
+}
+#error-pass:hover{
+
+    cursor: pointer;
+}
+
+.user-list-container::-webkit-scrollbar {
+    width: 10px;
+    background-color: rgba(39,44,57,0.7);
+    border-radius:10px;
+   
+} 
+
+.user-list-container::-webkit-scrollbar-thumb {
+    background-color: #516B63;
+    border-radius:10px;
+
+}
+
+.user-list-container::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.chat-display-container::-webkit-scrollbar {
+    width: 10px;
+    background-color: rgba(39,44,57,0.7);
+    border-radius:10px;
+   
+} 
+
+.chat-display-container::-webkit-scrollbar-thumb {
+    
+    background-color: #516B63;
+    border-radius:10px;
+
+}
+
+.chat-display-container::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.popup-close:hover{
+
+    cursor: pointer;
+}
+
+.profile-avatar{
+
+    height:120px;
+    width:120px;
+    padding:10px;
+}

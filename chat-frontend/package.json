@@ -9,6 +9,7 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
+    "react-sound": "^1.1.0",
     "redux": "^3.7.2",
     "socket.io-client": "^2.0.4",
     "universal-cookie": "^2.1.2"
@@ -17,6 +18,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-and-deploy": "npm run build && s3cmd sync ~/Documents/node-chat/chat-frontend/build/* s3://chat-frontend && echo 'your app is up and running!!!'"
   }
 }
