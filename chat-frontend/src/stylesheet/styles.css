@@ -696,3 +696,14 @@ textarea:focus, input:focus{
     width:120px;
     padding:10px;
 }
+
+.loader-container{
+
+    position:absolute;
+    width:100%;
+    top:0;
+    min-height:675px;
+    justify-content: center;
+    align-items: center;
+    /* background-color: rgba(122, 177, 117,0.7); */
+}

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { setUser } from '../../redux/actions';
 import Config from '../../config';
 import loader from '../../gif/ajax-loading.gif'
+import Loader from "../loader";
 
 
 
@@ -22,6 +23,7 @@ class Login extends Component {
 
             username: null,
             password: null,
+            loader: false
         }
     }
 
@@ -55,6 +57,7 @@ class Login extends Component {
 
             <div className="login-container">
                 <img id="loader" src={loader} className="loader" alt="loading..." />
+                <Loader display={this.state.loader} />
                 <div className="login-area-container" id="login-area-container">
                     <div id="login-area" className="login-area">
                         <div className="login-head-container"><p className="login-head">Login To Start Chatting</p></div>
@@ -121,8 +124,7 @@ class Login extends Component {
     login() {
 
         if (this.state.username && this.state.password) {
-            document.getElementById('loader').style.display = 'block';
-            document.getElementById('login-area-container').style.filter = "blur(3px)";
+            this.setState({ loader: true });
             fetch(this.config.getUrl("login"), {
 
                 method: 'POST',
@@ -151,8 +153,7 @@ class Login extends Component {
                     } else {
                         /**show/hide loader and display login errors  */
 
-                        document.getElementById('loader').style.display = 'none';
-                        document.getElementById('login-area-container').style.filter = "blur(0px)"
+                        this.setState({ loader: false })
                         document.getElementById('error-user').style.display = "inline";
                         document.getElementById('error-msg').innerText = responseJson.msg;
                         document.getElementById('error-pass').style.display = "inline";
@@ -161,8 +162,7 @@ class Login extends Component {
                     }
                 })
                 .catch((error) => {
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('login-area-container').style.filter = "blur(0px)";
+                    this.setState({ loader: false })
                     alert("something is wrong please try again later" + error);
                 });
 

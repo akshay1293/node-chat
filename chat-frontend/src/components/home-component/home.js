@@ -46,56 +46,27 @@ class Home extends Component {
 
     componentWillMount() {
 
-        var token = this.cookie.get("chat_token")
-        if (token) {
-
-            fetch(this.config.getUrl('verify'), {
-
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-access-token': token,
-                },
-            })
-                .then((response) => { return response.json() })
-                .then((responsejson) => {
-                    // console.log("componentWillMount");
-                    if (!responsejson.auth) {
-
-                        window.location = this.config.baseUrl;
-                    } else {
-                        // console.log(responsejson.decoded.user);
-                        this.setState({ isVerified: true });
-                        this.props.setUser(responsejson.decoded.user);
-                        let connection = JSON.parse(localStorage.getItem("connection"));
-                        if (connection) {
-                            this.props.setConnection(connection);
-                            this.props.createConversation(connection.to);
-                        }
-
-                        socket.emit('join',
-                            {
-                                user: this.props.userRed.handle,
-
-                            });
-
-                        socket.on("signedOut", function (data) {
-                            if (data.from === this.props.chatRed.connection.to) {
-
-                                this.showAlert(data.from + ' ' + data.msg);
-                            }
-
-                        }.bind(this))
-
-                    }
-                }).catch((err) => {
-
-                    this.showAlert("unable to get data");
-                })
-        } else {
-
-            window.location = this.config.baseUrl;
+        const { user } = this.props;
+        this.props.setUser(user);
+        let connection = JSON.parse(localStorage.getItem("connection"));
+        if (connection) {
+            this.props.setConnection(connection);
+            this.props.createConversation(connection.to);
         }
+
+        socket.emit('join',
+            {
+                user: this.props.userRed.handle,
+
+            });
+
+        socket.on("signedOut", function (data) {
+            if (data.from === this.props.chatRed.connection.to) {
+
+                this.showAlert(data.from + ' ' + data.msg);
+            }
+
+        }.bind(this))
     }
 
     showAlert(alert) {
